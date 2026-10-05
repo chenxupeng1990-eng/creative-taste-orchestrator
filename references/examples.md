@@ -1,57 +1,36 @@
-# Taste-first examples
+# Hypothetical comparison exercises
 
-These examples show the level of specificity expected. They are mechanisms, not templates to copy.
+These are teaching examples, not rendered work, tested outcomes, user-confirmed precedents, or style templates. A real comparison may reach the opposite conclusion. Do not copy the examples' surface language across projects.
 
-## Web: from generic to authored
+## 1. Warm editorial product page
 
-### Generic brief response
+Brief: make a small home object feel part of everyday life while keeping the purchase facts clear.
 
-```text
-Create a modern, premium, futuristic landing page with a dark background, purple-blue gradient, glass cards, smooth scrolling, and subtle particle effects.
-```
+A: warm photography, a clear type scale, ordinary grid, and concise specifications.
+B: irregular giant headlines, floating objects, and a visually novel scroll scene using the same content.
 
-This is an inventory of familiar signals. It has no tension, visual claim, dominant gesture, signature, or deliberate absence.
+Question: does B strengthen the product's role, or merely demand more attention? Inspect subject-to-title scale, crop, reading order, mobile composition, and access to specifications. A may win despite more familiar structure. “Less template-like” is not sufficient reason to choose B.
 
-### Taste-first direction
+## 2. The idea is sound; the material is not
 
-```yaml
-business_truth: "The product turns a hidden process into something people can inspect and trust."
-audience_tension: "technical authority × human curiosity"
-visual_claim: "The site should feel like entering a night laboratory where the same object becomes clearer with each scroll."
-dominant_gesture: "A narrow horizontal light cuts through the dark field and reveals one layer of the object at a time."
-signature: "A single measurement rail reappears in the title, product crop, and scroll transition."
-restraint: "No gradient mesh, glass card wall, floating particles, or equal-weight feature grid."
-deliberate_sacrifice: "Give up immediate feature density to preserve one continuous act of inspection."
-motion_verb: "scan"
-```
+Brief: a precise product reveal with a reflective surface.
 
-The implementation may still use cards or gradients if a later proof earns them, but they are no longer the starting language.
+A: appropriate quiet composition and a readable reveal, but flat light makes the object look plastic.
+B: the same composition and timing with a repaired light/material relationship.
 
-## Motion: from effects to choreography
+Question: does the revised highlight, edge behavior, and shadow make the material credible? Keep the camera and type stable. Do not switch to a new narrative or add particles to hide the weak render. This is a craft comparison, not a requirement for a new creative direction.
 
-### Generic motion response
+## 3. Pace versus comprehension
 
-```text
-Use smooth fade-ins, slide-up transitions, parallax layers, subtle zooms, and a few particles to make the video feel cinematic.
-```
+Brief: reveal a fact, let the viewer understand it, then move to the next beat.
 
-This describes effects without a temporal idea.
+A: a short reveal followed immediately by a cut.
+B: the same reveal with a longer readable hold and adjusted sound exit.
 
-### Taste-first motion direction
+Question: does the hold improve comprehension without losing the intended energy? Compare full playback with sound, then muted, plus the same reveal state. A contact sheet alone cannot decide. The extra hold is a hypothesis, not a universal rule.
 
-```yaml
-motion_thesis: "The object is not introduced; it is assembled in the viewer's attention."
-motion_verb: "unfold"
-beat_sheet:
-  - rest: "A quiet frame holds the material and its shadow."
-  - anticipation: "One edge lifts before the object is understandable."
-  - action: "The plane unfolds and exposes the evidence inside."
-  - settle: "The material keeps a small residual vibration."
-  - hold: "The viewer gets time to read before the next cut."
-primary_motion: "The object unfolds once."
-secondary_motion: "Only the light responds to the fold."
-stillness_budget: "At least one deliberate hold after every reveal."
-forbidden_effects: [global_fade_up, random_parallax, infinite_float, decorative_particles]
-```
+## 4. The bolder repair is worse
 
-The resulting motion can be simple. It is authored because the movement has a meaning, a rhythm, and a repeated relationship.
+A later revision increases image scale, introduces a new display font, and changes the transition simultaneously. The opening becomes more striking, but mobile reading and the next section deteriorate.
+
+Do not declare improvement because the screen is more dramatic. Keep the last-good baseline, identify which change actually helped, and test that change without the regressions. The result can be tie, neither, or rollback—not necessarily approval of the newest version.
