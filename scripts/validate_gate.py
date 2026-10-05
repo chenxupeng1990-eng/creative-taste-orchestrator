@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Fail-closed validation for a creative production/review status record."""
+"""Legacy record-shape diagnostics only; never authorizes creative acceptance.
+Use apply_review.py to apply actual comparison decisions to a working baseline.
+"""
 
 from __future__ import annotations
 
@@ -38,13 +40,13 @@ def validate(record: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
     status = record.get("status")
     independence = record.get("independence")
-    if status not in ALLOWED_STATUSES:
+    if not isinstance(status, str) or status not in ALLOWED_STATUSES:
         errors.append(f"status must be one of {sorted(ALLOWED_STATUSES)}")
-    if status in {"accepted_creative", "confirmed"} and independence != "independent":
+    if isinstance(status, str) and status in {"accepted_creative", "confirmed"} and independence != "independent":
         errors.append("creative acceptance requires independence=independent")
-    if independence in {"simulated", "unverified"}:
+    if isinstance(independence, str) and independence in {"simulated", "unverified"}:
         errors.append("simulated or unverified independence cannot pass a creative gate")
-    if status in {"accepted_creative", "confirmed"}:
+    if isinstance(status, str) and status in {"accepted_creative", "confirmed"}:
         manifest = record.get("artifact_manifest")
         if not isinstance(manifest, dict):
             errors.append("creative acceptance requires an artifact_manifest object")
@@ -98,7 +100,7 @@ def main() -> int:
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"valid": False, "errors": [str(exc)]}, ensure_ascii=False, indent=2))
         return 2
-    print(json.dumps({"valid": not errors, "errors": errors}, ensure_ascii=False, indent=2))
+    print(json.dumps({"record_valid": not errors, "acceptance_authorized": False, "errors": errors}, ensure_ascii=False, indent=2))
     return 0 if not errors else 1
 
 
