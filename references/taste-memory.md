@@ -1,156 +1,100 @@
-# Taste memory and long-term improvement
+# Taste memory: feedback, diagnosis, and reuse
 
-Long-term memory stores evidence-backed decisions, not a growing list of slogans. Keep the project context and the scope of every rule so a local preference is not mistaken for universal taste. The skill must have an actual writable memory root to claim persistence; otherwise it returns an exportable memory patch.
+Store decisions with evidence and scope, not aesthetic slogans. “The user rejected r01” and “the user dislikes all gradients” are different claims. The first may be observed; the second usually is an unsupported generalization.
 
-## Storage contract
+## Three separate records
 
-Use an append-only store with a stable root selected before the task:
+1. **User observation/verdict:** exact wording, message/decision locator, artifact and version, accepted/rejected/mixed.
+2. **Model diagnosis:** proposed failure type and cause, evidence location, uncertainty, and the next comparison that could test it.
+3. **Confirmed remedy or rule:** what changed, the user's response to that version, scope, and conditions for reuse.
+
+Never label the model's explanation user-confirmed merely because the user said “丑” or approved the finished artifact. Artifact approval also does not confirm every proposed universal rule. Avoid making the user complete a taxonomy; record the wording and do the diagnostic work.
+
+## Existing storage and commands
+
+Use a project-local writable root by default:
 
 ```text
-<memory-root>/cases.jsonl
-<memory-root>/artifacts.jsonl
-<memory-root>/rules.jsonl
-<memory-root>/reviews/
-<memory-root>/index.json
+<project>/.creative-taste/cases.jsonl
+<project>/.creative-taste/artifacts.jsonl
+<project>/.creative-taste/rules.jsonl
+<project>/.creative-taste/reviews/
+<project>/.creative-taste/index.json
 ```
 
-Use `scripts/taste_memory.py` to initialize, register an inspected artifact, append a proposed case, confirm a case through an explicit event, search, and validate this store. `add` cannot create a confirmed case; `confirm` requires a registered artifact, a non-model confirmer, a structured event, and a blind review receipt. Manual edits should be treated as untrusted until `validate` passes.
+The existing [taste_memory.py](../scripts/taste_memory.py) supports init, register-artifact, add, confirm, search, and validate. `add` cannot create a confirmed case. `confirm` requires a registered artifact, human/external confirmer, explicit event, and a blind review receipt. Never invent a receipt to satisfy that contract; retain a pending case when it cannot be met. A command argument is not authentication of a real human event.
 
-For a single project, prefer `<project>/.creative-taste/`. Use a shared cross-project root only when the user has requested global accumulation. Do not copy raw sensitive media into the store; keep a locator, hash, and short observation. Every append needs a timestamp, a unique case ID, source revision, and writer.
+Use shared memory only with user permission. Keep sensitive media out of the store; retain authorized local locators, hashes, and brief observations. The ignored project directory is not automatically synchronized or backed up. If persistence is unavailable, provide a patch and state memory_pending or memory_unavailable.
 
-## Case record
+## Case shape
 
-Use a case record after a review reaches an explicit human verdict:
+Retain the fields consumed by the existing script. Additional calibration fields are descriptive metadata, not new automatic behavior:
 
 ```yaml
 case_id: ""
-state: proposed | pending_human | confirmed | rejected | stale | superseded
-created_at: ""
-updated_at: ""
-writer: "model or human identity"
-source_revision: "project or artifact revision that produced this case"
-domain: video | web | brand | campaign | other
-context_summary: ""
+state: "pending_human"
+created_at: "ISO timestamp"
+updated_at: "ISO timestamp"
+writer: ""
+source_revision: ""
+domain: "web"
 intent: ""
-references: []
+context_summary: ""
 artifact_evidence:
-  - locator: "timecode, frame, URL state, component, or application"
-    observation: "What is visibly present"
+  - locator: "actual artifact region or timecode"
+    observation: "what is present"
 review:
   reviewer_id: ""
   reviewer_role: ""
-  blind_to_history: true
+  blind_to_history: false
   receipt: ""
-verdict: accepted | rejected | mixed | accepted_after_revision
-objections: []
-revision:
-  before: ""
-  after: ""
-  delta: ""
-human_rationale: ""
-confirmer_id: ""
-confirmation_event:
-  event_id: ""
-  source: user_message | approval_record | project_decision
-  human_asserted: true
-confirmed_at: ""
-accepted_artifact_id: ""
-accepted_artifact_version: ""
+  evidence_locators: []
+verdict: "rejected"
+human_rationale: "exact user wording, not an invented cause"
+scope: "medium, intent, audience, project"
+calibration:
+  feedback_locator: ""
+  failure_type: "direction | craft | asset_content | technical | uncertain"
+  proposed_cause: ""
+  diagnosis_status: "hypothesis"
+  next_avoidance_test: ""
+  exceptions: []
+pairwise_decision:
+  baseline_artifact: ""
+  candidate_artifact: ""
+  decision: "A | B | tie | neither | insufficient_evidence"
+  evidence_locators: []
+  preserved_strengths: []
 rule_candidate: ""
-scope: "project type, audience, medium, or style family"
-confidence: low | medium | high
-precedence: project_principle | confirmed_precedent | proposed_rule
-reuse_count: 0
 reuse_evidence: []
 supersedes: []
-superseded_by: []
-follow_up: "What later use would validate or falsify this case"
 ```
 
-Store positive and negative cases together. A rejected direction can be valuable as a boundary case, and an accepted direction can fail when the context changes.
+A confirmed record additionally needs the actual confirmer/event/time and accepted_artifact_id/version required by the script. Despite the legacy name `accepted_artifact_id`, a confirmed case can have a rejected verdict. Keep confirmation state distinct from approval polarity.
 
-## Promotion rules
+## Retrieval before the next proof
 
-- A model-generated observation is a proposal until the user confirms the verdict or names the revision that solved it.
-- Promote a rule only when its scope is clear and it has either been reused successfully or is an explicit project principle.
-- Preserve the original evidence and the human wording. Do not replace a concrete objection with a vague label such as “less tasteful.”
-- Keep competing preferences when context explains the difference. Do not force them into one universal rule.
-- Mark rules as stale when repeated work contradicts them; do not silently delete the history.
-- Only `confirmed` cases and explicit project principles may enter precedent retrieval. `proposed`, `pending_human`, and `rejected` cases may be retrieved only as warnings or counterexamples. Use the script's default `search` state filter unless a deliberate counterexample review is being run.
-- A confirmation must identify who confirmed which artifact version and when. A string inside a model-generated case is not a confirmation event.
-- Resolve conflicts by scope: explicit project principle > project-local confirmed precedent > shared confirmed precedent > proposed rule. A narrower rule beats a broader rule when both apply.
-- Never mutate an old case in place. Append a superseding case and preserve the old evidence.
+Search a small relevant set by medium, intent, and failure wording. The current script performs lexical matching, not semantic search or automatic style learning. With Chinese or differently worded feedback, use several concise queries or a broader domain query, then inspect the results.
 
-## Retrieval before production
-
-Before a new direction panel, retrieve:
-
-- accepted precedents with a similar intent, medium, audience, or production constraint;
-- rejected alternatives that resemble the current default;
-- recurring objections and the fixes that resolved them;
-- cases where a rule was valid only in a narrower context.
-
-Give directors the relevant precedents as evidence, not as instructions to imitate. Ask them to state which relationship they are borrowing and what they are changing.
-
-Retrieval must record the query, filters, returned case IDs, states, scopes, and the reason each case was relevant. Exclude pending cases from normal positive precedent retrieval. If the store is absent or unreadable, state `memory_unavailable` and continue without claiming accumulation.
-
-## Drift and calibration review
-
-Periodically inspect whether the system is:
-
-- repeating one director's style regardless of brief;
-- promoting surface patterns into universal rules;
-- rejecting unusual work because it violates a familiar anti-pattern;
-- accepting technically complete artifacts without audience evidence;
-- storing scores without concrete visual, textual, or interactive proof.
-
-The correction is a new comparison set, a narrower rule scope, or a changed director lens. Do not solve drift by adding more generic prohibitions.
-
-Do not automatically rewrite the skill from one case. A methodology change requires either an explicit user decision or a repeated, confirmed failure pattern with a documented before/after comparison. Keep case memory and skill-version changes separate.
-
-## Review record
-
-Return this shape for a pending or completed audit:
-
-```text
-Intent:
-First-view read:
-Evidence:
-Strongest objection:
-Highest-impact fix:
-Validation plan:
-Memory status: pending | confirmed | rejected
+```sh
+python /path/to/skill/scripts/taste_memory.py search \
+  --root .creative-taste --domain web --states confirmed --query "hierarchy"
 ```
 
-## Fail-closed states
+The default confirmed filter returns confirmed decisions of multiple verdicts, not only positive examples. Before using the results, the orchestrating agent must:
 
-Use these states explicitly:
+- separate accepted/accepted_after_revision precedents from rejected counterexamples and inspect mixed cases;
+- honor supersession links and exclude old/stale interpretations; the CLI does not resolve this automatically;
+- match scope and user intent, preferring explicit current project decisions over older or shared preferences;
+- treat pending diagnoses as hypotheses, never positive authority;
+- record the retrieved IDs and one concrete implication for the next proof.
 
-```text
-memory_unavailable  no writable store or unreadable index
-memory_pending      case proposed, human event missing
-review_unverified   artifact or independent reviewer receipt missing
-blocked             critical fact or hard-gate evidence missing
-confirmed           human event names the accepted artifact version
-```
+Do not retrieve a quota of cases if only one is useful. Do not append every historic aesthetic preference to the prompt. “Avoid this repeated equal-weight card hierarchy in dense evidence pages” is useful; “never use cards” is not.
 
-Never treat `memory_pending`, `review_unverified`, or `blocked` as an accepted result.
+## Close the loop without inventing learning
 
-## Taste calibration records
+At the next applicable task: retrieve the counterexample, name the failure to avoid, inspect the new proof for it, and record whether the remedy held. Keep a pairwise comparison and the user's subsequent response. Append a new case rather than silently rewriting prior evidence.
 
-Memory should improve future choices, not merely preserve explanations. Prefer pairwise decisions and boundary cases:
+This is an agent-executed retrieval and comparison procedure. The CLI does not automatically trigger on feedback, classify taste, rank by scope, promote rules, retire cases, or populate rules.jsonl. That file remains reserved. Do not claim these capabilities because metadata fields exist. This iteration changes the protocol, not the memory engine.
 
-```yaml
-pairwise_decision:
-  better_artifact: "A"
-  worse_artifact: "B"
-  user_wording: ""
-  concrete_reason: "composition, hierarchy, material, type, rhythm, brand ownership, or other observable cause"
-  scope: "medium, project type, audience, or brand"
-```
-
-Store rejected patterns as `anti_precedents` alongside accepted precedents. Retrieve relevant rejected patterns before production so the model can avoid a known failure, but do not turn one rejected surface treatment into a universal ban.
-
-For a new creative task, retrieve a small relevant set: two to five accepted precedents, two to five anti-precedents, and the user's original wording. Prefer the same medium and intent. Do not inject every historical preference into the prompt; old style preferences can contaminate a new project.
-
-Pairwise decisions and anti-precedents should retain the project scope, artifact version, evidence locator, and the exact user phrase that caused the decision. A record such as "less tasteful" without an observable reason is not useful calibration.
+A rule becomes durable only with scoped human confirmation or an explicit project principle. Successful reuse supports a rule; repeated contradiction calls for narrowing or supersession, not an ever-growing prohibition list. Case history and skill methodology versions remain separate.
