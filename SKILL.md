@@ -1,155 +1,57 @@
 ---
 name: creative-taste-orchestrator
-description: "Guide video, website, brand-visual, campaign, PPT, detail-page, and other creative work with a taste-first art direction process: make a specific visual claim, reject generic defaults, prototype the first view or frame, review the real artifact, and preserve human-confirmed taste."
+description: "Improve web, motion, video, brand, campaign, PPT, and commerce creative through visible references, concrete art direction, comparable rendered candidates, and baseline-preserving revision. Use when choosing a direction or when work feels generic, ugly, cheap, or visually weak."
 ---
 
 # Creative Taste Orchestrator
 
-Use this skill when the work requires a creative direction decision: defining a visual or experiential concept, planning a production, designing a website or motion system, comparing directions, improving a rendered artifact, or reviewing a finished result. Do not invoke it for routine implementation, generic copyediting, or a simple visual tweak unless the user is asking for a taste or direction decision.
+Make the artifact better, not its explanation longer. A taste thesis is a hypothesis; only the visible or audible work can support it. Specificity matters, but unusual is not automatically beautiful, effective, or appropriate.
 
-The skill has two connected jobs:
+Read project instructions, the brief, approved copy, existing design rules, and explicit user decisions in every mode. Preserve frozen business and content decisions. This skill directs and compares creative work; downstream tools or skills implement it. Do not replace an existing production pipeline with a new framework just to use this skill.
 
-1. **Taste-first art direction:** make one specific creative bet before components, code, polish, or feasibility dilute it.
-2. **Evidence-backed calibration:** inspect the real artifact, revise by visible deltas, and record only human-confirmed precedents.
+## Non-negotiable floor and creative ambition
 
-The skill is an art director with a point of view, not a component generator. Prefer one coherent, memorable risk over a polished collection of defaults. A complete brief, a successful build, or a reasonable explanation does not make a generic direction good.
+Truth, required content, accessibility, core task completion, identity continuity, and agreed production limits are not traded for novelty. Within that floor, pursue a clear point of view, strong composition, appropriate distinctiveness, and medium-native craft. Choose the priorities that matter to this brief; do not calculate a universal taste score.
 
-## Quality order
+An ordinary grid, restrained typography, familiar interaction, or still frame can be the best choice. Do not require decorative signatures, forced asymmetry, a dramatic metaphor, a fixed deletion percentage, or a mandatory risk. A useful trade-off may be none. Diagnose a weak premise separately from poor execution of a good premise.
 
-Judge creative work in this order:
+## Mode and reading budget
 
-```text
-point of view
-→ signature and memorability
-→ medium-native craft
-→ composition and hierarchy
-→ legibility and accessibility
-→ feasibility
-→ completeness
-```
+- `spark`: one local decision; compare the existing artifact with one revision. No panel.
+- `taste-first` (default): one recommended direction and one genuinely plausible alternative, expressed as two small visible proofs. Then choose, refine, and expand.
+- `system`: multiple media or an extended system; use [director-panel.md](references/director-panel.md) without averaging directions.
+- `review`: inspect supplied work, preserve its strengths, and repair the highest-impact failure.
 
-If a direction has no point of view, signature, dominant gesture, or deliberate sacrifice, return it for rework before discussing polish or implementation. Do not use an aggregate score to average a safe direction over a distinctive one.
+Read [visual-feedback-loop.md](references/visual-feedback-loop.md) plus the relevant medium adapter before the first proof. Load [taste-first-protocol.md](references/taste-first-protocol.md) or [visual-director-board.md](references/visual-director-board.md) only when the direction needs clarification. Use [anti-mediocrity.md](references/anti-mediocrity.md) for diagnosis, [examples.md](references/examples.md) for teaching examples, and [taste-memory.md](references/taste-memory.md) when retrieving or recording decisions. Do not dump all references into every task.
 
-## Route the task before doing the work
+## Production loop
 
-Use the smallest mode that can make a reliable creative decision. Do not make the user fill a full project dossier for a small visual choice.
+1. **Frame the decision.** Identify the intended effect, audience, real content/assets, hard constraints, and the one visual problem to solve. Reuse known context. Missing creative detail can become a stated hypothesis; do not invent missing product facts.
+2. **Look before naming.** Inspect a small relevant set of actual reference images, pages, or clips and applicable accepted/rejected precedents. A URL, article summary, or remembered style name is not an inspected reference. If access is unavailable, state the gap and make an original provisional proof rather than inventing what a reference shows.
+3. **Make a compact bet.** State the intended first impression, dominant visual relationship, what must stay quiet, and what the proof should demonstrate. Translate adjectives into scale, placement, crop, typography, material, light, timing, or sound. A few lines usually suffice.
+4. **Render comparable proofs early.** Use the same content, product, scope, and viewing conditions. In a new direction task, render A and B at similar fidelity. In a revision task, A is the saved last-good baseline and B is the proposed change. Make the smallest proof that tests the risky decision; do not build the full site or film first.
+5. **Compare the actual work.** First describe A and B without their design rationale; then compare with intent and references. Follow the pairwise contract in [visual-feedback-loop.md](references/visual-feedback-loop.md). Allow `A`, `B`, `tie`, `neither`, or `insufficient_evidence`. A new version is not presumed better.
+6. **Diagnose and change.** Separate direction, execution/craft, asset/content, and technical failures. Preserve the strongest existing relationships. State one main hypothesis, change a small coherent set of variables, and name the expected visible delta and rollback condition. Deletion, refinement, addition, or replacement are all valid repairs.
+7. **Re-render and compare again.** Keep source and proof versions. Check the changed region and at least one protected strength or neighboring state. Promote B to the working baseline only when the comparison supports it. If ambiguous, retain A and identify the next discriminating test.
+8. **Expand the selected direction.** Apply the relevant [domain adapter](references/domain-adapters.md). Recheck a real content section, mobile composition, transition, later shot, or application—not just the hero. Selection of a proof is not acceptance of the entire artifact.
+9. **Record the user's decision.** Preserve exact feedback, artifact version, observed failure, proposed cause, and confirmed remedy separately. Retrieve relevant negative cases next time, scoped to the medium and intent. Do not turn model diagnoses into user preferences.
 
-- **`spark`** — one thesis, one anchor, one gesture, one proof frame. Use for a single image, small visual change, or local interaction.
-- **`taste-first`** — one lead art director, one adversarial counterproposal, one removal pass, and a first-view or first-frame proof. This is the default for new web, motion, PPT, detail-page, and campaign work.
-- **`system`** — full context pack, materially different directions, judges, red-team, medium adapters, and cross-domain mapping. Use for a brand system, annual campaign, full site, or multi-scene production.
-- **`review`** — inspect an existing artifact and produce a blunt verdict, evidence, and a ranked revision queue.
+## Iteration control
 
-Keep fact, legal, claim, accessibility, budget, and production blockers strict. Let creative unknowns be resolved by a declared hypothesis and a visible proof instead of blocking the work with premature paperwork.
+For an ordinary task, default to two low-cost proofs and up to two targeted revision passes, unless the user specifies otherwise. This is a work budget, not a guarantee of acceptance or a universal ban on further iteration. After repeated failure, identify whether the concept or its execution is responsible before changing the thesis. Repetition alone does not prove the concept is wrong.
 
-## Taste-first production loop
+Do not interrupt the user for approval at every internal step. If authorized to produce the work, make a recommendation and proceed through reversible decisions. Ask only when an unresolved choice materially changes scope, meaning, cost, or permission. Do not stop at a proof plan when the available tools can produce the proof now.
 
-Follow this sequence unless the user requests a narrower mode:
+## Evidence and status
 
-1. **Notice.** Describe what is actually visible or requested: audience, business truth, medium, first-view effect, available assets, and constraints. Separate facts, preferences, assumptions, and blockers.
-2. **Name the default.** List the five most likely generic answers for this brief and why they would fail. For web, this often includes a centered gradient hero, glass cards, a three-column bento, pill buttons, and global fade-up. For motion, it often includes uniform fade/slide/stagger, random parallax, particles, and default zooms. Treat these as defaults to overcome, not permanent bans.
-3. **Make one creative bet.** Read [taste-first-protocol.md](references/taste-first-protocol.md) and write a compact taste thesis before listing components or code.
-   When the output still sounds like mood adjectives or template inventory, read [examples.md](references/examples.md) and rewrite the direction at that level of specificity.
-4. **Lock the visual direction.** Read [visual-director-board.md](references/visual-director-board.md). Translate adjectives into observable composition, scale, space, type, image, material, light, timing, and interaction behavior.
-5. **Choose the direction posture.** In `taste-first`, produce one committed lead direction and one adversarial counterproposal. In `system`, use the full panel in [director-panel.md](references/director-panel.md), but make the directions materially incompatible and never average them into a collage.
-6. **Make a low-cost proof.** Render the first viewport, first frame, three style frames, or a 6–10 second motion proof before expanding the full page or film. No proof means the style is not locked.
-7. **Attack and subtract.** Use [anti-mediocrity.md](references/anti-mediocrity.md). Inspect the proof without its rationale first. Name the dominant failure, delete the most template-like elements, and make at most the highest-leverage additions.
-8. **Compile for the medium.** Read the relevant adapter in [domain-adapters.md](references/domain-adapters.md), [web-art-direction.md](references/web-art-direction.md), or [motion-art-direction.md](references/motion-art-direction.md). Treat a website as a scene, a video as choreography, a PPT as argument and page rhythm, and a detail page as a purchase decision system.
-9. **Expand only after the proof passes.** Preserve the primary spine, signature behavior, and deliberate restraint across pages, shots, states, and breakpoints. Components and tokens serve the direction; they do not define it.
-10. **Review the real artifact.** Describe the first-time read before explaining intent. Review at actual viewport, thumbnail, first 1.5–3 seconds, playback, scroll, or application size as relevant.
-11. **Revise by visible delta.** For each fix, name the before state, change, reason, and validation evidence. If the same direction is rejected twice, replace the thesis or primary spine instead of polishing it again.
-12. **Write memory only after human confirmation.** Use [taste-memory.md](references/taste-memory.md). Store pairwise choices, positive examples, rejected patterns, user wording, scope, and the evidence version. A model may propose a rule but may not claim that the user confirmed it.
+Keep capture, technical checking, comparative judgment, human preference, and publication separate. A screenshot proves a capture exists; it does not prove hierarchy. A pixel difference is not an aesthetic improvement. A successful render is not audience validation.
 
-## Taste thesis contract
+Use existing browser/rendering tools to create evidence. [build_comparison.py](scripts/build_comparison.py) packages existing local images or clips into an offline A/B board, saves snapshot hashes, and creates a pending review template. It does not capture screens, decode/inspect artwork, synchronize video, judge quality, enforce workflow execution, or confirm human decisions.
 
-The minimum creative lock is:
+A rationale-free first pass in the same context is self-review, not verified blinding. A separate reviewer receives only the brief, criteria, and artifacts; record actual separation or mark it unverified. Missing separation does not prevent useful iteration, but does prevent a claim of independent acceptance.
 
-```yaml
-taste_thesis:
-  business_truth: ""
-  audience_tension: ""
-  desired_first_impression: ""
-  visual_claim: "A claim that can be proven or disproven by the artifact"
-  dominant_gesture: "One composition, material, camera, or motion operation"
-  signature: "What survives after removing logo and explanatory copy"
-  hierarchy: "dominant / supporting / quiet"
-  restraint: "What this direction deliberately refuses to do"
-  deliberate_sacrifice: "What is given up to make the direction specific"
-  risk_budget: safe | balanced | bold
-  anti_defaults: []
-  proof_question: "What must the first proof make visible?"
-```
+For formal `accepted_creative` or `confirmed`, retain the existing structured artifact/reviewer/memory receipts and run [validate_gate.py](scripts/validate_gate.py). Its result is a record check, not a taste score. Working selection remains `rendered`, `review_pending`, or `revision_required` as appropriate; never rename an unreviewed proof to accepted. Do not claim the comparison helper and the legacy gate are automatically connected.
 
-Do not use `modern`, `premium`, `clean`, `cinematic`, `futuristic`, `young`, or `high-end` as final design instructions. Translate them into observable behavior. If the explanation still depends on adjectives, the direction is not ready.
+## Deliverable first
 
-## Creative posture
-
-- Make a recommendation, not a menu of equally safe options.
-- Let the first draft be more specific and risky than the final production contract; feasibility comes after the creative bet.
-- State what the direction refuses, what it risks, and who may dislike it.
-- Use references as mechanisms. Record the attractor, relationship, behavior, transformation, and forbidden surface imitation.
-- Keep one dominant gesture and one supporting system. Do not give every section, card, shot, or object equal importance.
-- Use familiar primitives only when they perform a declared semantic, brand, spatial, or interaction job. A familiar component with no reason is a generic signal.
-- Give decoration an emotional, atmospheric, or kinetic job when it is not informational. If deleting it changes nothing, delete it.
-- Separate `taste_mode` from `production_mode`: first protect the premise and signature, then solve responsive behavior, budget, performance, and implementation.
-
-## Human feedback loop
-
-Treat “丑”, “普通”, “廉价”, “没感觉”, or “像模板” as high-priority failure signals. Do not defend the direction or apply cosmetic tweaks first. Classify the failure as one or more of:
-
-```text
-premise | composition | hierarchy | type | material | asset | motion |
-genericity | brand mismatch | content mismatch | medium mismatch
-```
-
-Then decide whether to repair the artifact or return to the taste thesis. Preserve the user's original wording and the before/after delta for later calibration.
-
-## System workflow and evidence
-
-For `system` or `review` work, read the repository's `AGENTS.md`, project brief, existing design system, and project-specific protocol first. Run a capability preflight:
-
-- facts that can change the direction or acceptance decision;
-- actual artifact or proof access;
-- relevant medium adapter;
-- a writable memory root or an explicit memory patch;
-- producer and reviewer separation when claiming independent review.
-
-In `system` mode, use the full process in [director-panel.md](references/director-panel.md): frozen context, materially different cards, head-director decision, red-team, production contract, artifact review, and visible-delta revision. Treat a missing receipt as `blocked`, `review_unverified`, or `memory_pending`; do not convert it into confident prose.
-
-Technical verification, creative acceptance, memory confirmation, and publication remain separate decisions. Use [scripts/validate_gate.py](scripts/validate_gate.py) before reporting an accepted state. The validator checks record shape; it does not prove aesthetic quality or human truth.
-
-## Output contracts
-
-For a taste-first production pass, return:
-
-1. a short verdict and taste thesis;
-2. the default-output inventory and the deliberate alternatives;
-3. one lead direction and one adversarial direction;
-4. the visual director board or motion board;
-5. the first proof artifact or exact proof plan;
-6. the removal list, highest-risk choice, and acceptance test;
-7. the handoff contract for the relevant medium.
-
-For a review pass, return:
-
-```text
-Blunt verdict:
-First-view read:
-Three located evidence points:
-Strongest failure:
-Highest-leverage fix:
-What to remove:
-Validation plan:
-Memory status: pending | confirmed | rejected
-```
-
-For `system` work, also return structured direction cards, judge records, a head-director decision, artifact manifest, review receipt, and memory receipt. Use objects rather than prose placeholders:
-
-```yaml
-status: draft | blocked | proposed | rendered | review_pending | revision_required | accepted_technical | accepted_creative | memory_pending | confirmed | rejected | review_unverified
-independence: independent | simulated | unverified
-artifact_manifest: {}
-review_receipt: {}
-memory_receipt: {}
-```
-
-Do not claim that a build, schema, render, reviewer, or human confirmation exists without its actual receipt or explicit unavailable reason.
+Lead with the artifact or comparison, the recommendation, the visible reason, and the next change if one remains. Save structured comparison and revision records in the project; do not make the user read a committee report or fill a dossier. Label synthetic examples, incomplete coverage, self-review, and memory pending honestly.
