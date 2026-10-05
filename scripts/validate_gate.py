@@ -12,6 +12,11 @@ from typing import Any, Dict, List
 
 
 BLOCKING_STATES = {"blocked", "review_unverified", "memory_pending", "unverified"}
+ALLOWED_STATUSES = {
+    "draft", "blocked", "proposed", "rendered", "review_pending",
+    "revision_required", "accepted_technical", "accepted_creative",
+    "memory_pending", "confirmed", "rejected", "review_unverified",
+}
 
 
 def read_record(path: str) -> Dict[str, Any]:
@@ -33,6 +38,8 @@ def validate(record: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
     status = record.get("status")
     independence = record.get("independence")
+    if status not in ALLOWED_STATUSES:
+        errors.append(f"status must be one of {sorted(ALLOWED_STATUSES)}")
     if status in {"accepted_creative", "confirmed"} and independence != "independent":
         errors.append("creative acceptance requires independence=independent")
     if independence in {"simulated", "unverified"}:
@@ -51,6 +58,8 @@ def validate(record: Dict[str, Any]) -> List[str]:
             source = manifest.get("source")
             if isinstance(source, str) and source.startswith("/") and not os.path.exists(source):
                 errors.append(f"artifact_manifest.source does not exist: {source}")
+        if not nonempty(record.get("producer_id")):
+            errors.append("creative acceptance requires producer_id")
         review = record.get("review_receipt")
         if not isinstance(review, dict):
             errors.append("creative acceptance requires a review_receipt object")
