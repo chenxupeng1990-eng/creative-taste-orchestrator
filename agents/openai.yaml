@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creative Taste Orchestrator"
+  short_description: "Direct, compare, review, and learn from creative work"
+  default_prompt: "Use $creative-taste-orchestrator to guide this creative project through independent director proposals, deliberate synthesis, artifact review, and human-confirmed taste memory."
