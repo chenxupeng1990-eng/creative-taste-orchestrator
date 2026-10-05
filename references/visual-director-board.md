@@ -1,70 +1,25 @@
 # Visual director board
 
-Create this board before writing full HTML/CSS, building a component system, generating a complete video, or producing a large image set. It is a compact art direction lock, not a moodboard and not a component inventory.
-
-## Shared board
+A board coordinates a small proof; it is not a mandatory full design dossier. Fill only what affects the next visual decision.
 
 ```yaml
 visual_director_board:
-  visual_world: "What kind of place, object, event, or editorial system is this?"
-  opening_scene: "What does the viewer enter first?"
-  focal_anchor: ""
-  counterpoint: ""
-  quiet_zone: ""
-  composition_grammar: ""
-  scale_relationship: ""
-  type_behavior: ""
-  image_or_asset_strategy: ""
-  light_and_color_proportion: ""
-  material_behavior: ""
-  motion_or_interaction_grammar: ""
-  signature_behavior: ""
-  responsive_or_temporal_change: ""
-  first_proof: ""
-  deliberate_absence: []
+  first_view: "actual content and viewing condition"
+  focal_relationship: ""
+  hierarchy_and_quiet_space: ""
+  composition_and_scale: ""
+  type_and_line_breaks: ""
+  asset_crop_light_material: ""
+  motion_or_interaction: "or not applicable"
+  responsive_or_temporal_adaptation: ""
+  approved_invariants: []
+  proof_question: ""
 ```
 
-The board must establish one dominant relationship. It must not list every page, shot, component, or effect before the first proof exists.
+An expressive page may benefit from a scene, editorial, or spatial metaphor. A utilitarian screen may not. Use a metaphor only when it improves the content and interaction relationship. Ordinary structure is allowed when carefully composed.
 
-## Authored tokens
+Derive tokens from the visual decisions or preserve the project's approved tokens. Record the token/config revision with the proof; do not silently change it midway through a comparison. Typography, measure, grid, spacing, radii, color, shadows, and motion values need a coherent relationship, not novelty in each property.
 
-If a code system or design system is needed, derive its tokens from the board:
+Use real content lengths and representative assets. Keep product/character identity and claim evidence stable. When placeholders are unavoidable, mark what they prevent the reviewer from judging. Low cost does not mean so little craft that the idea cannot be read: resolve the focal crop, principal typography, and decisive material or timing cue in both candidates.
 
-```yaml
-authored_tokens:
-  type_scale: ""
-  measure_and_line_length: ""
-  grid_offset: ""
-  radius_policy: ""
-  stroke_and_shadow: ""
-  material_or_surface: ""
-  color_proportion: ""
-  motion_durations_and_eases: ""
-```
-
-Tailwind, shadcn, Framer, or another library may provide structure. It cannot supply the project's visual language by default.
-
-## Content and asset direction
-
-Do not use placeholder content as proof of taste. Before judging layout, define:
-
-- copy tone, length, and line-break behavior;
-- image subject, camera position, crop, light, and negative space;
-- product or character invariants across a sequence;
-- evidence, data, or claims that must be real;
-- the relationship between image, title, object, and action;
-- assets that are allowed to vary and assets that must remain stable.
-
-If the content or asset is only a placeholder, call the result a concept proof, not a style-locked artifact.
-
-## Proof sizes
-
-Use the smallest proof that reveals the creative risk:
-
-- web: first viewport plus one scroll state;
-- motion: four states — rest, anticipation, action, settle — plus a hold;
-- static: key visual at intended display size;
-- PPT: one visual KV page and one information-density page;
-- detail page: first screen, purchase reason, and evidence block.
-
-Do not add polish to a proof whose visual world, hierarchy, or signature is not yet convincing.
+Choose the minimum useful proof: a matching viewport, a key visual at intended scale, two page types for a deck, a purchase reason plus evidence for commerce, or a full action/beat for motion. A static board cannot prove temporal rhythm. Preserve the resulting A/B snapshots before expanding production.
