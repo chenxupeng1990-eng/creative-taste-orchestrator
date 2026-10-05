@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Append-only, confirmed-only storage for creative-taste cases.
 
-The store preserves evidence and enforces state boundaries. It cannot prove that a
+Single-writer store. JSONL is authoritative; no rules file or derived index.
+Human feedback and blind aesthetic review are separate concerns. It cannot prove that a
 human really made an external decision; the confirm command makes that event
 explicit instead of allowing a model-generated case to claim confirmation inline.
 """
@@ -10,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
-import hashlib
 import json
 import os
 import sys
@@ -54,8 +54,6 @@ def store_paths(root: Path) -> Dict[str, Path]:
         "root": root,
         "cases": root / "cases.jsonl",
         "artifacts": root / "artifacts.jsonl",
-        "rules": root / "rules.jsonl",
-        "index": root / "index.json",
         "reviews": root / "reviews",
     }
 
@@ -78,34 +76,13 @@ def write_json_atomic(path: Path, value: Dict[str, Any]) -> None:
         raise
 
 
-def digest_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    if not path.exists():
-        return digest.hexdigest()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def init_store(root: Path) -> None:
+    """JSONL is the source of truth. Legacy index/rules files are not consumed."""
     paths = store_paths(root)
-    paths["root"].mkdir(parents=True, exist_ok=True)
+    root.mkdir(parents=True, exist_ok=True)
     paths["reviews"].mkdir(parents=True, exist_ok=True)
-    for key in ("cases", "artifacts", "rules"):
+    for key in ("cases", "artifacts"):
         paths[key].touch(exist_ok=True)
-    if not paths["index"].exists():
-        write_json_atomic(
-            paths["index"],
-            {
-                "version": 2,
-                "updated_at": now(),
-                "case_ids": [],
-                "artifact_ids": [],
-                "cases_digest": digest_file(paths["cases"]),
-                "artifacts_digest": digest_file(paths["artifacts"]),
-            },
-        )
 
 
 def iter_jsonl(path: Path, label: str) -> Iterable[Dict[str, Any]]:
@@ -122,19 +99,6 @@ def iter_jsonl(path: Path, label: str) -> Iterable[Dict[str, Any]]:
             if not isinstance(value, dict):
                 raise ValueError(f"record at {path}:{line_number} is not an object")
             yield value
-
-
-def load_index(root: Path) -> Dict[str, Any]:
-    path = store_paths(root)["index"]
-    if not path.exists():
-        raise ValueError(f"memory_unavailable: missing index: {path}")
-    try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"memory_unavailable: invalid index: {path}: {exc}") from exc
-    if not isinstance(value, dict):
-        raise ValueError("memory_unavailable: index is not an object")
-    return value
 
 
 def require_text(value: Any, field: str, errors: List[str]) -> None:
@@ -178,7 +142,7 @@ def validate_case(case: Dict[str, Any], artifacts: Optional[Dict[str, Dict[str, 
         "accepted_after_revision",
     }:
         errors.append("verdict is invalid")
-    if state == "confirmed":
+    if state in {"confirmed", "stale", "superseded"}:
         confirmer = case.get("confirmer_id")
         require_text(confirmer, "confirmer_id", errors)
         if isinstance(confirmer, str) and confirmer.lower() in MODEL_IDENTITIES:
@@ -208,19 +172,8 @@ def validate_case(case: Dict[str, Any], artifacts: Optional[Dict[str, Dict[str, 
         if case.get("verdict") not in {"accepted", "rejected", "mixed", "accepted_after_revision"}:
             errors.append("confirmed case requires a valid verdict")
         require_text(case.get("scope"), "scope", errors)
-        review = case.get("review")
-        if not isinstance(review, dict):
-            errors.append("confirmed case missing review receipt")
-        else:
-            for field in ("reviewer_id", "reviewer_role", "receipt"):
-                require_text(review.get(field), f"review.{field}", errors)
-            if review.get("reviewer_id") == case.get("writer"):
-                errors.append("reviewer_id must differ from writer")
-            if review.get("blind_to_history") is not True:
-                errors.append("review.blind_to_history must be true")
-            locators = review.get("evidence_locators")
-            if not isinstance(locators, list) or not locators:
-                errors.append("review.evidence_locators must be a non-empty list")
+        # A human preference is valid without an independent aesthetic review.
+        # Preserve any model diagnosis separately; no receipt authenticates identity.
     return errors
 
 
@@ -245,7 +198,6 @@ def validate_store(root: Path) -> List[str]:
         return [f"memory_unavailable: root does not exist: {root}"]
     errors: List[str] = []
     try:
-        index = load_index(root)
         cases, artifacts = read_records(root)
         case_ids: Set[str] = set()
         for case in cases:
@@ -254,15 +206,15 @@ def validate_store(root: Path) -> List[str]:
                 errors.append(f"duplicate case_id: {case_id}")
             case_ids.add(case_id)
             errors.extend(f"{case_id}: {error}" for error in validate_case(case, artifacts))
-        artifact_ids = set(artifacts)
-        if sorted(index.get("case_ids", [])) != sorted(case_ids):
-            errors.append("index case_ids do not match cases.jsonl")
-        if sorted(index.get("artifact_ids", [])) != sorted(artifact_ids):
-            errors.append("index artifact_ids do not match artifacts.jsonl")
-        if index.get("cases_digest") != digest_file(store_paths(root)["cases"]):
-            errors.append("index cases_digest does not match cases.jsonl")
-        if index.get("artifacts_digest") != digest_file(store_paths(root)["artifacts"]):
-            errors.append("index artifacts_digest does not match artifacts.jsonl")
+        # There is no mutable derived index to corrupt or gate normal reads.
+        events = set()
+        for case in cases:
+            if case.get("state") in {"confirmed", "stale", "superseded"}:
+                event = case.get("confirmation_event", {})
+                key = (event.get("source"), event.get("event_id"))
+                if key in events:
+                    errors.append(f"duplicate confirmation event: {key}")
+                events.add(key)
     except (OSError, ValueError) as exc:
         errors.append(str(exc))
     return errors
@@ -275,22 +227,6 @@ def append_jsonl(root: Path, key: str, record: Dict[str, Any]) -> None:
         handle.write(serialized + "\n")
         handle.flush()
         os.fsync(handle.fileno())
-
-
-def refresh_index(root: Path) -> None:
-    paths = store_paths(root)
-    cases, artifacts = read_records(root)
-    write_json_atomic(
-        paths["index"],
-        {
-            "version": 2,
-            "updated_at": now(),
-            "case_ids": sorted(case.get("case_id") for case in cases),
-            "artifact_ids": sorted(artifacts),
-            "cases_digest": digest_file(paths["cases"]),
-            "artifacts_digest": digest_file(paths["artifacts"]),
-        },
-    )
 
 
 def append_artifact(root: Path, artifact: Dict[str, Any]) -> Dict[str, Any]:
@@ -307,7 +243,6 @@ def append_artifact(root: Path, artifact: Dict[str, Any]) -> Dict[str, Any]:
     if artifact["artifact_id"] in artifacts:
         raise ValueError(f"artifact_id already exists: {artifact['artifact_id']}")
     append_jsonl(root, "artifacts", artifact)
-    refresh_index(root)
     return artifact
 
 
@@ -332,7 +267,6 @@ def append_case(root: Path, case: Dict[str, Any]) -> Dict[str, Any]:
     if errors:
         raise ValueError("; ".join(errors))
     append_jsonl(root, "cases", case)
-    refresh_index(root)
     return case
 
 
@@ -345,10 +279,21 @@ def confirm_case(root: Path, case_id: str, confirmer_id: str, event_id: str, sou
     source_case = next((case for case in cases if case.get("case_id") == case_id), None)
     if source_case is None:
         raise ValueError(f"case not found: {case_id}")
-    if source_case.get("state") in {"confirmed", "superseded"}:
+    if source_case.get("state") not in {"pending_human", "proposed", "rejected"}:
         raise ValueError("case is already confirmed or superseded")
     if artifact_id not in artifacts:
         raise ValueError(f"artifact_id is not registered: {artifact_id}")
+    bound_id = source_case.get("artifact_id")
+    bound_version = source_case.get("artifact_version")
+    if bound_id != artifact_id or bound_version != artifacts[artifact_id]["version"]:
+        raise ValueError("source case must bind artifact_id and artifact_version to the confirmed artifact")
+    for prior in cases:
+        event = prior.get("confirmation_event", {})
+        if event.get("source") == source and event.get("event_id") == event_id:
+            if (prior.get("confirmed_from_case_id", (prior.get("supersedes") or [None])[0]) == case_id and prior.get("confirmer_id") == confirmer_id
+                    and prior.get("accepted_artifact_id") == artifact_id):
+                return prior
+            raise ValueError("confirmation event already used for a different decision")
     confirmed = dict(source_case)
     confirmed["case_id"] = f"case-{uuid.uuid4().hex}"
     confirmed["state"] = "confirmed"
@@ -358,15 +303,12 @@ def confirm_case(root: Path, case_id: str, confirmer_id: str, event_id: str, sou
     confirmed["confirmation_event"] = {"event_id": event_id, "source": source, "human_asserted": True}
     confirmed["accepted_artifact_id"] = artifact_id
     confirmed["accepted_artifact_version"] = artifacts[artifact_id]["version"]
-    confirmed["supersedes"] = [case_id]
-    review = confirmed.get("review")
-    if not isinstance(review, dict):
-        raise ValueError("source case must contain a review receipt before confirmation")
+    confirmed["confirmed_from_case_id"] = case_id
+    confirmed["supersedes"] = list(dict.fromkeys([case_id] + source_case.get("supersedes", [])))
     errors = validate_case(confirmed, artifacts)
     if errors:
         raise ValueError("; ".join(errors))
     append_jsonl(root, "cases", confirmed)
-    refresh_index(root)
     return confirmed
 
 
@@ -374,21 +316,32 @@ def searchable_text(case: Dict[str, Any]) -> str:
     return json.dumps(case, ensure_ascii=False, sort_keys=True).lower()
 
 
-def search_cases(root: Path, query: str, domain: Optional[str], states: Set[str]) -> List[Dict[str, Any]]:
+def search_cases(root: Path, query: str, domain: Optional[str], states: Set[str],
+                 scope: Optional[str] = None, verdict: Optional[str] = None) -> List[Dict[str, Any]]:
     errors = validate_store(root)
     if errors:
         raise ValueError("memory_unavailable: " + "; ".join(errors))
     cases, _ = read_records(root)
     terms = [term for term in query.lower().split() if term]
+    superseded = {old for case in cases if case.get("state") in {"confirmed", "stale", "superseded"}
+                  for old in case.get("supersedes", [])}
     results = []
     for case in cases:
+        if case.get("case_id") in superseded:
+            continue
+        if scope and case.get("scope") != scope:
+            continue
+        if verdict and case.get("verdict") != verdict:
+            continue
         if case.get("state") not in states:
             continue
         if domain and case.get("domain") != domain:
             continue
         haystack = searchable_text(case)
         if all(term in haystack for term in terms):
-            results.append(case)
+            result = dict(case)
+            result["retrieval_role"] = "negative" if case.get("verdict") == "rejected" else "positive" if case.get("verdict") in {"accepted", "accepted_after_revision"} else "mixed_or_pending"
+            results.append(result)
     audit = {
         "retrieval_id": f"retrieval-{uuid.uuid4().hex}",
         "queried_at": now(),
@@ -397,7 +350,11 @@ def search_cases(root: Path, query: str, domain: Optional[str], states: Set[str]
         "states": sorted(states),
         "result_case_ids": [case.get("case_id") for case in results],
     }
-    write_json_atomic(store_paths(root)["reviews"] / f"{audit['retrieval_id']}.json", audit)
+    audit.update({"scope": scope, "verdict": verdict})
+    try:
+        write_json_atomic(store_paths(root)["reviews"] / f"{audit['retrieval_id']}.json", audit)
+    except OSError as exc:
+        print(f"warning: retrieval log not written: {exc}", file=sys.stderr)
     return results
 
 
@@ -428,6 +385,8 @@ def build_parser() -> argparse.ArgumentParser:
     search_parser.add_argument("--root", required=True, type=Path)
     search_parser.add_argument("--query", default="")
     search_parser.add_argument("--domain")
+    search_parser.add_argument("--scope", help="Exact project scope; no cross-scope fallback")
+    search_parser.add_argument("--verdict", choices=("accepted", "rejected", "mixed", "accepted_after_revision"))
     search_parser.add_argument("--states", default="confirmed", help="comma-separated states")
 
     validate_parser = subparsers.add_parser("validate", help="validate the append-only store")
@@ -459,7 +418,7 @@ def main() -> int:
             invalid = requested - STATES
             if invalid:
                 raise ValueError(f"invalid states: {sorted(invalid)}")
-            results = search_cases(args.root, args.query, args.domain, requested)
+            results = search_cases(args.root, args.query, args.domain, requested, args.scope, args.verdict)
             print(json.dumps(results, ensure_ascii=False, indent=2))
             return 0
         if args.command == "validate":
