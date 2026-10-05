@@ -1,77 +1,48 @@
 # Creative Taste Orchestrator
 
-An art-direction skill for making the visible work better—not just making its rationale sound better. This iteration adds a **visual feedback loop** while preserving the taste-first intent.
+A compact creative-direction skill with a real comparison-to-revision loop. It does not manufacture taste scores or treat a completed checklist as good design.
 
 ```text
-inspect relevant references
-→ form a small creative hypothesis
-→ render comparable A/B proofs
-→ compare actual work, not explanations
-→ repair the highest-impact issue
-→ recompare with the last-good baseline
-→ expand, then record scoped human feedback
+inspect references -> render comparable proofs -> inspect A/B
+-> apply the decision -> read the selected state -> revise/expand
+-> record explicit human feedback separately
 ```
 
-## Use
+Load [SKILL.md](SKILL.md) in the host. Keep its existing image, browser, video, and production tools. Default to two small proofs and targeted refinement rather than a committee report.
 
-Load `SKILL.md` in your skill-capable agent environment. The host supplies its existing image, browser, video, and production tools. The skill does not bundle a model runner or renderer.
+## Executable core
 
-Example task:
-
-> Use $creative-taste-orchestrator to redesign this page. Keep the approved copy and product facts. Inspect the supplied references; make two comparable first-view proofs before building the full page. Compare typography, hierarchy, imagery, and mobile reading. Recommend one, then revise only the highest-impact problem. Show the work, not a long design report.
-
-For a revision, use the existing artifact as A and the proposed change as B. The outcome may be A, B, tie, neither, or insufficient evidence. More dramatic is not automatically better.
-
-## What changed
-
-- References must be actually viewed; their visual relationship is translated, not merely named.
-- Real candidate and baseline comparisons happen before broad implementation.
-- Direction, craft, assets/content, and technical defects receive different repairs.
-- Familiar grids, cards, fades, stillness, and restrained design are allowed when they serve the brief.
-- No mandatory risk, fixed subtraction quota, or automatic thesis reset after two failures.
-- Truth, required content, accessibility, task completion, and agreed limits remain non-negotiable.
-- The user receives artifacts and decisions; detailed working records stay in the project.
-
-## Offline comparison helper
-
-Requires Python 3.9+ and only the standard library. Capture/render your proofs with the host first; then create a JSON spec (paths are relative to that spec):
-
-```json
-{
-  "question": "Is the revised hierarchy better?",
-  "context": "Same product, approved copy, and viewing conditions",
-  "baseline_version": "r00",
-  "candidate_version": "r01",
-  "views": [
-    {"id": "desktop", "condition": "1440x900; loaded; scroll=0", "a": "r00/desktop.png", "b": "r01/desktop.png"}
-  ],
-  "references": []
-}
-```
+Python 3.9+, standard library only:
 
 ```sh
-python scripts/build_comparison.py --spec /path/to/proofs.json \
-  --out /path/to/project/.creative-taste/comparisons/r01
-```
-
-Open the generated `index.html`. It contains A/B media for each matched view and an optional reference section. Review originals at their intended size and write the decision in `review.json`. MP4/WebM clips are supported alongside raster image pairs; videos have native playback controls, not synchronized or frame-accurate playback. Separate extracted frame pairs can supplement clips.
-
-The helper snapshots the local files, calculates SHA-256 hashes of the copies, and refuses to overwrite an existing comparison directory. All judgments start pending. It checks file/container signatures, not successful decoding or visual quality. Verify that media actually loads and plays.
-
-It does **not** take screenshots, generate frames, make aesthetic judgments, verify equal capture conditions, isolate reviewers, authenticate approval, or enforce the full workflow. Its manifest and review template are not automatically wired into the legacy acceptance gate. No aesthetic benchmark improvement is claimed by the tooling tests.
-
-## Reading map
-
-Start with [SKILL.md](SKILL.md) and [visual-feedback-loop.md](references/visual-feedback-loop.md). Add the [web](references/web-art-direction.md), [motion/video](references/motion-art-direction.md), or [other medium](references/domain-adapters.md) adapter. Use the [diagnostic guide](references/anti-mediocrity.md) for weak work and [taste memory](references/taste-memory.md) for scoped feedback. [Examples](references/examples.md) are hypothetical, not validated visual precedents.
-
-## Tests
-
-```sh
+python scripts/build_comparison.py --spec /project/proofs.json --out /project/comparison-r01
+# Actually inspect the rendered media, then fill review.json.
+python scripts/apply_review.py --bundle /project/comparison-r01 --state /project/working-state.json
 python -m unittest discover -s tests -v
 ```
 
-The comparison tests cover snapshot hashes, pending decisions, missing/empty files, format checks, image/video pairing, references, duplicate views, HTML escaping, relative paths, failure cleanup, and baseline overwrite protection. The existing memory and formal status-gate scripts are unchanged in this iteration.
+A comparison spec names question, context, baseline_version, candidate_version, and matching views:
 
-## Partial adapter synchronization
+```json
+{"question":"Is the product hierarchy clearer?","context":"Same approved copy and assets","baseline_version":"r00","candidate_version":"r01","views":[{"id":"desktop","condition":"1440x900; loaded; scroll=0","a":"r00/desktop.png","b":"r01/desktop.png"}],"references":[]}
+```
 
-During this update, the connector blocked replacement of `references/web-art-direction.md` and `references/domain-adapters.md`. Those two remote files remain at their earlier versions; their revised drafts were not published. The core loop, comparison helper, diagnosis guide, motion adapter, examples, and memory protocol were updated. Do not treat this commit as a fully synchronized adapter rewrite.
+The builder makes an offline media board, immutable snapshot copies, manifest, and pending review. It checks container signatures, not decoding or aesthetic quality. Images and MP4/WebM are supported; videos use native controls, not synchronized playback.
+
+`apply_review.py` verifies review/manifest binding and snapshot bytes. Pending, mismatched, stale, or hard-failing selections cannot promote B. A/tie keep A; neither retains the last-good baseline and requests revision; missing evidence stays pending. Retries are idempotent. The host must read the state and implement the chosen direction. It is working selection, not publication or human approval.
+
+See [review application](references/review-application.md), [visual feedback](references/visual-feedback-loop.md), [web](references/web-art-direction.md), [motion](references/motion-art-direction.md), and [other media](references/domain-adapters.md).
+
+## Human feedback, not a second judging committee
+
+[taste_memory.py](scripts/taste_memory.py) keeps cases and artifacts in JSONL. It removes the unused rules file and fragile derived-index dependency. Confirmation requires an explicit event bound to the reviewed artifact, not a blind-review receipt. Repeated confirmation is idempotent; confirmed supersessions are filtered; exact scope and verdict filters separate relevant positive and negative cases. Optional retrieval-log failure does not prevent reads. See [memory](references/taste-memory.md) for migration and limits.
+
+`validate_gate.py` remains only a legacy record-format diagnostic. Its `record_valid` result never authorizes creative acceptance. It is no longer the iteration path.
+
+All tools assume a single writer. They do not authenticate humans, evaluate pixels, enforce model isolation, classify legal risk, or prevent an agent from editing both evidence and its records. Those concerns require real host permissions and review, not more self-reported fields.
+
+## Regression protection
+
+The test suite covers actual A/B image/video markup, snapshot copies, baseline preservation, decision effects, stale/tampered evidence, idempotency, atomic state replacement, human feedback without blind review, artifact binding, supersession, scoped negatives, and non-blocking retrieval logs. Media markup tests do not replace browser decoding tests.
+
+The mesoestetic website trial is documented in [examples/mesoestetic-web-test.md](examples/mesoestetic-web-test.md). It is a real project trial with self-review, not an independent benchmark or official brand publication. A higher aesthetic score is not claimed from passing software tests.
