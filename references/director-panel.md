@@ -1,151 +1,44 @@
-# Art director panel
+# Direction selection without committee averaging
 
-The panel is a deliberation device, not a request for three balanced brainstorms. Its purpose is to protect a strong creative spine from premature feasibility and consensus.
+Use a panel only when the decision warrants it. The default is a lead recommendation, one credible alternative, and a comparative critic. These are reasoning roles, not claims that independent agents ran.
 
-## Default posture
+## Fair alternatives
 
-For `taste-first` work, use:
+Both alternatives solve the same brief with the same required content and comparable assets, fidelity, and viewing scope. Neither is a strawman. Distinct directions should change a meaningful relationship—composition, information sequence, image treatment, interaction, pacing, or premise. A local craft comparison may legitimately change only typography, crop, or timing; do not reject it for lacking a new concept.
 
-1. **Primary Art Director** — makes one complete, specific, risky bet.
-2. **Wild Card** — proposes one materially incompatible alternative that attacks the category default.
-3. **Hostile Critic** — tries to kill the lead with concrete evidence, then names the smallest change that could save it.
-
-Use the full panel only for `system` work. Never average directions, vote for a compromise, or hide incompatible behaviors in a synthesis.
-
-## Frozen context
-
-Before a full panel, prepare one shared context snapshot:
-
-```yaml
-project:
-  name: ""
-  mediums: [video, web, brand, campaign, ppt, detail_page, other]
-  audience: ""
-  intended_effect: ""
-  deliverable: ""
-  duration_or_scope: ""
-  decision_owner: ""
-  decision_deadline: ""
-business_truth: ""
-audience_tension: ""
-references: []
-design_read: ""
-taste_thesis: {}
-system_locks:
-  palette: []
-  typography_or_voice: []
-  shape_or_material: []
-  layout_or_composition: []
-  image_or_asset: []
-  motion_or_interaction: []
-anti_patterns: []
-facts: []
-constraints:
-  hard: []
-  delivery: []
-  forbidden: []
-  resources: []
-acceptance:
-  technical: []
-  creative: []
-  human_decision_required: true
-open_questions: []
-blockers: []
-```
-
-Freeze the context before independent runs. Later facts are an explicit revision, not a silent change. Keep business and identity constraints ahead of ideation; solve delivery constraints after a primary spine exists unless they change the creative premise.
+For `system`, explore additional directions only when they could change the decision. Freeze the brief, facts, constraints, and relevant reference snapshots. Give isolated runs the same brief if isolation is available, and record their actual run IDs. If it is not, mark the process simulated or unverified. Do not demand incompatible directions or a wildcard when the brand requires continuity.
 
 ## Direction card
 
-Every direction must return:
-
 ```yaml
-id: lead | wild_card | other
-run_id: ""
-context_snapshot: ""
-independence: independent | simulated | unverified
-point_of_view: "What does this direction believe?"
-tension: ""
-thesis: "The one-sentence creative bet"
-audience_effect: "What a first-time viewer should feel, understand, or do"
-dominant_gesture: ""
-signature: ""
-hierarchy:
-  dominant: ""
-  supporting: ""
-  quiet: ""
-visual_grammar:
-  composition: ""
-  scale: ""
-  space: ""
-  type_or_voice: ""
-  image_or_asset: ""
-  material_or_light: ""
-  motion_or_behavior: ""
-restraint: ""
-sacrifice: ""
+id: "A"
+intended_effect: ""
+point_of_view: ""
+dominant_relationship: ""
+hierarchy: ""
+visual_grammar: "concrete composition / type / asset / motion choices"
 reference_translation: []
-proof_artifact: ""
-assumptions: []
-risks: []
-reject_if: []
-material_difference:
-  changed_axes: []
-  why_not_surface_only: ""
+protected_constraints: []
+trade_off: "may be none"
+proof: "actual artifact locator or explicit not-yet-rendered status"
+question_to_test: ""
 ```
 
-Changing only color, font, or surface treatment is not a new direction. In `system` mode, directions must differ on at least two of premise, composition, information structure, audience effect, interaction model, pacing, material behavior, or production method. Include one wildcard with a real risk and a stated legibility floor.
+Render the smallest fair comparison before choosing on the strength of prose. Follow [visual-feedback-loop.md](visual-feedback-loop.md). Protect the minimum floor of truth, accessibility, content, and task completion. Compare fit, coherence, hierarchy, distinctiveness, legibility, interaction, and craft in the priorities of this brief, without a universal aggregate score.
 
-## Selection and attack
-
-Select in this order:
-
-1. brand or project specificity;
-2. point of view and signature survival;
-3. medium-native craft;
-4. composition and hierarchy;
-5. legibility and extension;
-6. feasibility and cost.
-
-Before any numeric comparison, run binary kill tests:
-
-- the direction works for any brand;
-- removing logo and copy removes the entire identity;
-- the first view has no memorable object, relationship, or action;
-- the result is only a component or transition inventory;
-- the proof relies on polish to conceal a weak premise.
-
-The head director must produce a single decision record:
+## Head-director decision
 
 ```yaml
+selection: "A | B | tie | neither | insufficient_evidence"
 primary_spine: ""
-chosen_from: lead | wild_card | other
-signature_to_preserve: ""
-deliberate_risk: ""
+visible_reason: ""
+strengths_to_preserve: []
 borrowed_elements: []
 rejected_elements: []
-deliberate_absence: []
-unresolved_risks: []
-validation_artifacts: []
-hard_gates_processed: []
-fatal_objections_processed: []
-conflicts: []
+trade_offs: []
+next_test: ""
 ```
 
-## Critical review
+Choose one coherent direction. Borrow only compatible elements; record a conflict instead of concealing it in a collage. On a tie, preserve the working baseline. If neither is good, identify the shared failure before requesting another candidate.
 
-The critic receives the proof before the rationale when possible. Require:
-
-```yaml
-blunt_verdict: ""
-first_view_read: ""
-strongest_evidence: []
-generic_signals: []
-signature_survival: ""
-fatal_objection: ""
-highest_leverage_change: ""
-removal_candidates: []
-evidence_locators: []
-```
-
-If the same spine is rejected twice, return to the thesis and replace it. Do not keep polishing a rejected premise.
+The critic tries to improve the decision, not to kill every proposal. Ask for the strongest reason to choose each candidate, the strongest objection, and the smallest test that resolves uncertainty. When reviewing without rationale in the same context, describe it as self-review rather than blind independent review.
