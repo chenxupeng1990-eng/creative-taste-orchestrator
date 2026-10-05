@@ -1,53 +1,48 @@
-# Director panel method
+# Art director panel
 
-The panel is a deliberation device, not a request for three similar brainstorms. The outputs are independent hypotheses about the same brief.
+The panel is a deliberation device, not a request for three balanced brainstorms. Its purpose is to protect a strong creative spine from premature feasibility and consensus.
 
-## Context pack
+## Default posture
 
-Before calling a director, prepare one shared context pack:
+For `taste-first` work, use:
+
+1. **Primary Art Director** — makes one complete, specific, risky bet.
+2. **Wild Card** — proposes one materially incompatible alternative that attacks the category default.
+3. **Hostile Critic** — tries to kill the lead with concrete evidence, then names the smallest change that could save it.
+
+Use the full panel only for `system` work. Never average directions, vote for a compromise, or hide incompatible behaviors in a synthesis.
+
+## Frozen context
+
+Before a full panel, prepare one shared context snapshot:
 
 ```yaml
 project:
   name: ""
-  mediums: [video, web, brand, campaign, other]
+  mediums: [video, web, brand, campaign, ppt, detail_page, other]
   audience: ""
   intended_effect: ""
   deliverable: ""
   duration_or_scope: ""
   decision_owner: ""
   decision_deadline: ""
-references:
-  baseline: []
-  borrowable_relationships: []
-design_read: "One sentence describing the intended visual or experiential read"
-dials:
-  variance: 1-10
-  motion: 1-10
-  density: 1-10
+business_truth: ""
+audience_tension: ""
+references: []
+design_read: ""
+taste_thesis: {}
 system_locks:
   palette: []
   typography_or_voice: []
   shape_or_material: []
-  interaction_or_editing: []
+  layout_or_composition: []
+  image_or_asset: []
+  motion_or_interaction: []
 anti_patterns: []
-facts:
-  - id: ""
-    statement: ""
-    source: ""
-    verified_at: ""
-    sensitivity: public | internal | restricted
-cross_domain_map:
-  - premise: ""
-    web: ""
-    video: ""
-    packaging: ""
-    social: ""
+facts: []
 constraints:
-  hard:
-    - id: ""
-      owner: ""
-      pass_condition: ""
-      evidence_required: ""
+  hard: []
+  delivery: []
   forbidden: []
   resources: []
 acceptance:
@@ -58,94 +53,78 @@ open_questions: []
 blockers: []
 ```
 
-Do not let a director invent a missing business, legal, audience, claim, accessibility, or production fact. Mark low-impact assumptions and continue when a reasonable assumption is enough. Set a blocker and ask when the missing answer changes the direction materially. Freeze the context snapshot before independent runs; later facts are an explicit revision, not a silent change.
-
-## Default lenses
-
-Adapt these lenses to the medium while preserving their separation:
-
-1. **Meaning director** — clarifies the premise, cultural or narrative point, audience understanding, and emotional after-effect.
-2. **Form director** — designs the visual, sonic, verbal, material, typographic, or spatial language and its signature move.
-3. **Experience director** — designs how the work unfolds, is used, is remembered, and can be produced consistently within the constraints.
-
-For a video these may become narrative, visual-rhythm, and production-performance directors. For a website they may become editorial-IA, art-direction, and interaction-system directors. For a brand system they may become positioning, visual-material, and extension-system directors. Keep the roles independent; do not make every director solve every problem in the same way.
-
-## Isolation receipt
-
-When delegation or separate calls are available, run one director per isolated context. Pass only the frozen context snapshot and that director's lens. Do not pass another director's card, hidden reasoning, or ranking into a later director call. Save the run IDs and context revision. Run judges after all cards exist; blind the labels when practical.
-
-When separate contexts are unavailable, make separate passes with the same frozen input and do not show earlier outputs to later passes. Mark the result `simulated` rather than `independent`. If the same pass is asked to invent, judge, and merge without isolation, mark independence `unverified` and keep creative acceptance blocked.
+Freeze the context before independent runs. Later facts are an explicit revision, not a silent change. Keep business and identity constraints ahead of ideation; solve delivery constraints after a primary spine exists unless they change the creative premise.
 
 ## Direction card
 
-Require each director to return one complete card and an independence receipt:
+Every direction must return:
 
 ```yaml
-id: A
+id: lead | wild_card | other
 run_id: ""
-context_snapshot: "sha256 or stable revision ID"
+context_snapshot: ""
 independence: independent | simulated | unverified
+point_of_view: "What does this direction believe?"
+tension: ""
 thesis: "The one-sentence creative bet"
 audience_effect: "What a first-time viewer should feel, understand, or do"
-formal_system:
+dominant_gesture: ""
+signature: ""
+hierarchy:
+  dominant: ""
+  supporting: ""
+  quiet: ""
+visual_grammar:
   composition: ""
-  material: ""
+  scale: ""
+  space: ""
   type_or_voice: ""
-  color_or_tone: ""
-  behavior: ""
-signature_move: "The memorable operation that makes this direction specific"
-artifact_plan: []
+  image_or_asset: ""
+  material_or_light: ""
+  motion_or_behavior: ""
+restraint: ""
+sacrifice: ""
+reference_translation: []
+proof_artifact: ""
 assumptions: []
 risks: []
 reject_if: []
 material_difference:
-  changed_axes: [premise, formal_system]
-  compared_with: [B, C]
+  changed_axes: []
   why_not_surface_only: ""
 ```
 
-The three cards must differ on at least one material axis: premise, formal system, information structure, audience effect, interaction model, pacing, or production method. Surface-only variation does not count.
+Changing only color, font, or surface treatment is not a new direction. In `system` mode, directions must differ on at least two of premise, composition, information structure, audience effect, interaction model, pacing, material behavior, or production method. Include one wildcard with a real risk and a stated legibility floor.
 
-Before judging, run a difference check. Require at least two changed axes or one changed axis with a different audience effect and production behavior. If the cards are near-duplicates, regenerate the weakest card with an explicit anti-default constraint. Record the check instead of trusting the labels A/B/C.
+## Selection and attack
 
-## Independent judging
+Select in this order:
 
-Judges receive the context pack and all direction cards, not the directors' hidden reasoning. Use at least three lenses:
+1. brand or project specificity;
+2. point of view and signature survival;
+3. medium-native craft;
+4. composition and hierarchy;
+5. legibility and extension;
+6. feasibility and cost.
 
-- **Audience judge:** what is legible and memorable on first contact?
-- **Taste judge:** what is specific, coherent, surprising, and free of default or derivative signals?
-- **Producer judge:** what can be executed, tested, iterated, and extended without losing the idea?
+Before any numeric comparison, run binary kill tests:
 
-Each judge must provide:
+- the direction works for any brand;
+- removing logo and copy removes the entire identity;
+- the first view has no memorable object, relationship, or action;
+- the result is only a component or transition inventory;
+- the proof relies on polish to conceal a weak premise.
 
-```yaml
-strongest_evidence: ""
-fatal_objection: ""
-best_reusable_element: ""
-merge_condition: ""
-hard_gate_failures: []
-evidence_locators: []
-blind_to_generation_history: true
-ranking: []
-```
-
-Use numeric scores only to expose disagreement or sort a shortlist. A high score without evidence is not approval. A hard-gate failure is a veto until its evidence changes. A fatal objection must be answered in the head-director record or remain `unresolved`; it cannot be hidden in a weighted average.
-
-## Head-director synthesis
-
-The head director makes a decision record rather than an average:
+The head director must produce a single decision record:
 
 ```yaml
 primary_spine: ""
-chosen_from: A | B | C
-borrowed_elements:
-  - source: B
-    element: ""
-    compatible_because: ""
-rejected_elements:
-  - source: C
-    element: ""
-    reason: ""
+chosen_from: lead | wild_card | other
+signature_to_preserve: ""
+deliberate_risk: ""
+borrowed_elements: []
+rejected_elements: []
+deliberate_absence: []
 unresolved_risks: []
 validation_artifacts: []
 hard_gates_processed: []
@@ -153,12 +132,20 @@ fatal_objections_processed: []
 conflicts: []
 ```
 
-Choose one primary behavior for each important question. If two elements compete for the same role, keep one and log the rejection. The synthesis is successful when a stranger can describe one coherent direction, not when every director sees a fragment of their idea in it.
+## Critical review
 
-## Falsification pass
+The critic receives the proof before the rationale when possible. Require:
 
-Before execution, run a red-team pass against the head-director decision. Give the critic only the context pack, decision record, and intended artifact contract. Require three strongest failure modes, the evidence that would expose each one, and the smallest change that could falsify the criticism. The head director must resolve, accept, or explicitly carry each objection into `unresolved_risks`; unresolved critical objections keep the decision at `revision_required`.
+```yaml
+blunt_verdict: ""
+first_view_read: ""
+strongest_evidence: []
+generic_signals: []
+signature_survival: ""
+fatal_objection: ""
+highest_leverage_change: ""
+removal_candidates: []
+evidence_locators: []
+```
 
-## Production handoff
-
-Translate the decision into the medium's contract. For temporal or interactive work, define the trigger, start state, visible delta, duration or scope, end state, and handoff. For static work, define the hierarchy, material behavior, application context, and failure cases. Include a review plan before expensive generation or broad implementation begins.
+If the same spine is rejected twice, return to the thesis and replace it. Do not keep polishing a rejected premise.
