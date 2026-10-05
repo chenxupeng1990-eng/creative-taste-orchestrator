@@ -172,14 +172,16 @@ def build(spec_path: Path, output: Path) -> dict[str, Any]:
             manifest["references"].append(item)
         review = {
             "status": "review_pending", "reviewer_id": "", "independence": "unverified",
-            "first_read": {"a": "", "b": ""}, "hard_failures": [],
+            "first_read": {"a": "", "b": ""}, "observations": [], "hard_failures": [],
             "axes": {axis: {"verdict": "not_observed", "evidence": []} for axis in AXES},
             "decision": "insufficient_evidence", "reason": "", "preserve": [], "regressions": [],
             "next_edit": {"hypothesis": "", "changed_variables": [], "expected_visible_delta": "", "rollback_when": ""},
             "human_confirmation": None,
         }
-        for name, value in (("manifest.json", manifest), ("review.json", review), ("input-spec.json", spec)):
+        for name, value in (("manifest.json", manifest), ("input-spec.json", spec)):
             (output / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        review["manifest_sha256"] = hashlib.sha256((output / "manifest.json").read_bytes()).hexdigest()
+        (output / "review.json").write_text(json.dumps(review, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         (output / "index.html").write_text(render_board(manifest), encoding="utf-8")
         return manifest
     except Exception:
