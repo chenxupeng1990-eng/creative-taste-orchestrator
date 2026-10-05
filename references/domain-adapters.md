@@ -1,8 +1,8 @@
 # Domain adapters and evidence
 
-The deliberation method is global. The artifact, proof, and failure modes are domain-specific.
+The creative method is shared, but the proof and failure modes are medium-specific. Read the relevant adapter before production. A generic checklist cannot judge a web scene, a motion system, a PPT argument, and a detail page with the same evidence.
 
-## Artifact manifest
+## Shared artifact manifest
 
 Create a manifest before expensive production and update it for every material revision:
 
@@ -21,59 +21,31 @@ domain_links:
   components_or_shots_to_applications: []
 ```
 
-If a field cannot be produced, set it to `unavailable` with a reason. Do not fill it with a guessed path or a description of an artifact that was not inspected.
+If a field cannot be produced, use `unavailable` with a reason. Do not describe an artifact that was not inspected. A successful render is technical evidence, not creative acceptance.
 
-## Video and motion
+## Web
 
-Compile the chosen direction into a treatment, beat sheet, causal storyboard, shot contracts, and a render/review plan. Every shot should identify timing, subject, framing, action, camera or motion, graphic role, transition, and continuity requirements.
+Read [web-art-direction.md](web-art-direction.md). Review the first viewport, one scroll transition, one real content section, and the mobile recomposition. Check opening scene, eye path, dominant/supporting/quiet hierarchy, section rhythm, authored typography, image crop, responsive transformation, and motion purpose. A screenshot of one state cannot prove an interaction system.
 
-Review with:
+## Motion and video
 
-- full-film playback or the largest available excerpt;
-- contact sheets covering opening, turning points, lyric or narration entrances, transitions, and ending;
-- timecoded objections tied to visible states;
-- continuity checks for subject, material, light, typography, and recurring motifs;
-- a before/after render when a revision changes the creative read.
+Read [motion-art-direction.md](motion-art-direction.md). Compile the chosen direction into a treatment, beat sheet, shot contracts, and a proof render. Review full playback or the largest available excerpt, a contact sheet of rest/turning points/transitions/ending, and timecoded objections. Check subject continuity, camera grammar, light, material, typography, rhythm, holds, and afterimage. If a proof uses only selected stills, label playback coverage incomplete.
 
-Record frame or timecode coverage in the artifact manifest. If the review uses only selected stills, label playback coverage as incomplete.
+## PPT and argument pages
 
-Motion must serve a beat, lyric, event, hierarchy change, or state change. A successful render or frame-rate check is technical evidence only.
+Treat a deck as argument and page rhythm, not a collection of cards. Separate visual KV pages from information-density pages. Review title judgment, evidence order, conclusion hierarchy, chapter transitions, page-to-page spine, real data, and actual 16:9 viewing size. A page that is attractive but has no conclusion or decision role is not complete.
 
-## Websites and interactive products
+## Detail pages and commerce visuals
 
-Compile the direction into information architecture, page or screen states, component rules, content hierarchy, responsive behavior, and interaction contracts. Specify the entry state, user trigger, visible response, and recovery or exit state for important interactions.
-
-Review with:
-
-- desktop and mobile screenshots or a live prototype;
-- first-load, scroll, hover, focus, error, empty, and reduced-motion states where relevant;
-- a first-time-user walkthrough with no design-history explanation;
-- checks for repeated layout families, generic cards, weak hierarchy, fake content, and unmotivated animation;
-- evidence that the visual system survives content and viewport changes.
-
-Record first-load, scroll, hover/focus, error/empty, mobile, and reduced-motion coverage in the manifest when those states are in scope. A screenshot of one state cannot prove the interaction system.
+Freeze the core purchase reason, decision barrier, evidence order, and brand signature before visual execution. Review first-screen comprehension, product-to-copy relation, proof credibility, content length, image crop, mobile reading, and whether the page could be swapped to another brand without changing its structure. Do not use visual effects to compensate for an unfrozen semantic proposition.
 
 ## Brand visual systems
 
-Compile the direction into a positioning statement, visual grammar, key visual, material/color/type rules, and application family. Test the idea in at least two real contexts rather than judging a single hero image.
+Test the key visual in at least two real contexts: packaging, social, retail, print, live, or other relevant applications. Check whether the signature survives without the original mockup, whether the grammar extends without becoming a template, and whether the brand premise maps to visual behavior rather than only color and logo.
 
-Review with:
+## Cross-domain mapping
 
-- the key visual at intended viewing scale;
-- packaging, social, print, retail, or other relevant applications;
-- small-size and low-quality reproduction;
-- whether the signature survives without the original presentation mockup;
-- whether the rules are extensible without becoming a template.
-
-Map the brand premise to the key visual, then to packaging, social, retail, or other applications. A single hero mockup cannot prove system consistency.
-
-## Copy, campaign, and other creative work
-
-Use the same panel and decision record. Treat the artifact as the exact copy, storyboard, prototype, script, layout, or campaign mockup. Review comprehension, voice, distinctiveness, audience response, channel behavior, and production constraints with evidence appropriate to the medium.
-
-## Cross-domain system mapping
-
-When one idea spans multiple media, maintain a traceable mapping:
+When one idea spans media, maintain a traceable mapping:
 
 ```yaml
 premise: ""
@@ -82,25 +54,12 @@ tokens_or_rules: []
 applications:
   web: []
   video: []
+  ppt: []
+  detail_page: []
   packaging: []
-  social: []
 invariants: []
 allowed_adaptations: []
 failure_cases: []
 ```
 
-The mapping proves that a shared idea survives translation without forcing identical layouts. It also makes a cross-domain contradiction visible to the head director.
-
-## Shared review rubric
-
-Use hard gates for explicit requirements and a short set of soft axes for comparison:
-
-- intent fidelity;
-- specificity and reference distance;
-- coherence across elements and states;
-- audience legibility;
-- material or medium behavior;
-- emotional or cultural effect;
-- feasibility and extension.
-
-Do not collapse these into a universal aesthetic number. A review must say what is wrong, where it is visible, why it matters, and what change would test the diagnosis. If a gate has no owner, pass condition, and required evidence, it is a preference or an open question, not a gate.
+The shared idea must survive translation without forcing identical layouts. If the same asset, motion, or composition is copied mechanically across media, record the contradiction and adapt the behavior.
