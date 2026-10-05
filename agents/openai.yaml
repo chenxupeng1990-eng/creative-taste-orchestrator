@@ -1,4 +1,4 @@
 interface:
   display_name: "Creative Taste Orchestrator"
-  short_description: "Direct, compare, review, and learn from creative work"
-  default_prompt: "Use $creative-taste-orchestrator to guide this creative project through independent director proposals, deliberate synthesis, artifact review, and human-confirmed taste memory."
+  short_description: "Make specific creative bets, reject defaults, and refine real artifacts"
+  default_prompt: "Use $creative-taste-orchestrator in taste-first mode: make one visual claim, one dominant gesture, and one signature before components or code; attack generic defaults, prototype the first view or frame, then expand and review the real artifact."
