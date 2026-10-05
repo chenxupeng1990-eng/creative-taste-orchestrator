@@ -135,3 +135,22 @@ confirmed           human event names the accepted artifact version
 ```
 
 Never treat `memory_pending`, `review_unverified`, or `blocked` as an accepted result.
+
+## Taste calibration records
+
+Memory should improve future choices, not merely preserve explanations. Prefer pairwise decisions and boundary cases:
+
+```yaml
+pairwise_decision:
+  better_artifact: "A"
+  worse_artifact: "B"
+  user_wording: ""
+  concrete_reason: "composition, hierarchy, material, type, rhythm, brand ownership, or other observable cause"
+  scope: "medium, project type, audience, or brand"
+```
+
+Store rejected patterns as `anti_precedents` alongside accepted precedents. Retrieve relevant rejected patterns before production so the model can avoid a known failure, but do not turn one rejected surface treatment into a universal ban.
+
+For a new creative task, retrieve a small relevant set: two to five accepted precedents, two to five anti-precedents, and the user's original wording. Prefer the same medium and intent. Do not inject every historical preference into the prompt; old style preferences can contaminate a new project.
+
+Pairwise decisions and anti-precedents should retain the project scope, artifact version, evidence locator, and the exact user phrase that caused the decision. A record such as "less tasteful" without an observable reason is not useful calibration.
