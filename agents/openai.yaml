@@ -1,4 +1,4 @@
 interface:
   display_name: "Creative Taste Orchestrator"
-  short_description: "Make specific creative bets, reject defaults, and refine real artifacts"
-  default_prompt: "Use $creative-taste-orchestrator in taste-first mode: make one visual claim, one dominant gesture, and one signature before components or code; attack generic defaults, prototype the first view or frame, then expand and review the real artifact."
+  short_description: "Compare real creative proofs and improve the visible work"
+  default_prompt: "Use $creative-taste-orchestrator: inspect relevant visual references, make two small comparable proofs or compare a revision with the saved baseline, judge the actual work, and fix the highest-impact failure. Preserve strengths, allow ties or rollback, and do not replace craft with novelty or long design explanations."
