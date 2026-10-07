@@ -1,15 +1,33 @@
-# Web: art direction that survives use
+# Web: produce the visual experience, not a component inventory
 
-Read the actual brand/product brief and available visual assets. Use composition, typography, imagery, and an appropriate interaction to express one clear relationship. A grid or card is not disqualified because a library can implement it. A logo is a legitimate brand asset; removing it is a diagnostic, not a universal pass condition.
+Start with the real brief, copy and assets. For visually demanding work, select a [production route](production-routing.md) and resolve the focal asset before broad implementation. Use [product light stage](../recipes/product-light-stage.md) for a product hero or [surface scroll study](../recipes/surface-scroll.md) for continuous surface observation. These are production specifications, not installed high-end renderers.
 
-For a new direction, render two plausible first-view proofs with equal content and fidelity. For a repair, compare the saved baseline against the proposed change. Inspect a real content section and mobile reading before expanding. Use the same dimensions, loaded assets/fonts, scroll, and animation state. Label unavailable reference images honestly.
+## Frame and content
 
-Give the viewer a first focus, a useful secondary read, and breathing room. Preserve product proportions and label integrity. Do not invent bottles, laboratories, before/after results, studies, prices, clinics, or testimonials. A strong real product image can lead the website without invented photography. Prototype branding must not imply an official launch.
+Compose the actual headline, subject, secondary read and quiet region together. Familiar layout primitives can win; they are not disqualified by being easy to implement. A logo is a legitimate brand asset. Removing it is a diagnostic, not a universal acceptance condition.
+
+Use consumer-facing brand language. Do not publish internal copy such as "this page uses Three.js", "international premium style", or "scroll interaction demonstration" as the brand proposition. Keep an appropriate prototype/source disclosure separate.
+
+Preserve product proportions, label integrity and factual authority. Create new expressive backgrounds or material imagery when needed; do not invent branded factories, clinical evidence, before/after results, prices or testimonials. A product cutout is not automatically a finished photographic hero. Use [asset-production.md](asset-production.md) to complete and inspect the composite.
+
+## Resolve before multiplying sections
+
+For a new direction, make comparable first-view proofs using the same approved content and similar asset fidelity. Then implement one real content section and the critical mobile/interactive state. For repairs, compare with the last-good baseline. Declare intentional asset changes; do not compare a finished photograph against a placeholder and call the layout better.
+
+For a requested 3D effect, name the actual scene subject, geometry/material, camera and visible response. Verify the engine loaded, the intended renderer ran, and the output expresses that response. Decorative particles, an unused Three.js import, or a successful 2D fallback do not fulfill a requested skin-relief or product-structure experience.
+
+Use the existing project timeline and renderer. Pin dependencies and package required assets deliberately. A raw file, a served module build and a hosted deployment have different loading conditions: test the delivery entry actually supplied, not only a separately inlined approximation.
+
+## Scroll and layout
+
+Treat scroll as control over a scene relationship, not a reason for every element to fade in. Use coherent world coordinates for camera/object behavior and reserved screen-space regions for DOM type. Inspect the actual start, end and intermediate states; reverse direction, jump rapidly, and resize. Recompute the available section travel after layout changes. Fixing an overlap by removing all scroll travel disables the interaction rather than repairs it.
+
+Keep native scrolling and keyboard navigation. Essential content stays readable with JavaScript, WebGL or a dependency unavailable. Reduced-motion may present discrete or static states. Record those as alternatives, not evidence that the full effect ran. Pause or render on demand when appropriate; offline animation export does not establish live performance.
 
 ## Production checks
 
-Use the host browser to inspect desktop, intermediate, and mobile widths. Check text wrapping, overflow, real image loading, links, navigation, keyboard order/focus, open and closed menus/dialogs, and reduced-motion behavior. Test error/empty states only when they exist. Prefer native controls and progressively enhanced content. Never hide essential content permanently behind a reveal animation.
+Use the host browser at desktop, intermediate and mobile widths, including a shorter viewport when pinned scenes matter. Check heading wrapping, text-to-text overlap, text hidden by imagery, section collisions, actual asset decoding, links, navigation, focus order/return, and relevant open/closed states. Absence of horizontal overflow does not establish absence of overlap.
 
-A still screenshot cannot establish interaction quality. Exercise the controls. Check solid-color text contrast numerically where possible; manually inspect text over imagery. Do not call these checks a full accessibility audit.
+Observe the animation/interaction, not only its progress value or canvas element. Compare actual checkpoints and playback; inspect text over imagery and representative solid-color contrast. Do not call that a full accessibility audit. Exercise missing-asset and reduced-motion paths deliberately and report which renderer was inspected.
 
-Record actual A/B observations and apply the decision using [review-application.md](review-application.md). On a tie keep the baseline. More dramatic is not automatically more appropriate. Keep the visual reviewer and technical checks separate; neither grants production publication or legal clearance.
+Apply actual A/B decisions using [review-application.md](review-application.md). Proof selection covers the inspected unit, not the entire site or permission to publish. Follow [visual-feedback-loop.md](visual-feedback-loop.md) for repair and regression.
