@@ -1,4 +1,4 @@
 interface:
   display_name: "Creative Taste Orchestrator"
-  short_description: "Compare real creative proofs and improve the visible work"
-  default_prompt: "Use $creative-taste-orchestrator: inspect relevant visual references, make two small comparable proofs or compare a revision with the saved baseline, judge the actual work, and fix the highest-impact failure. Preserve strengths, allow ties or rollback, and do not replace craft with novelty or long design explanations."
+  short_description: "Make real assets, resolve the craft, compare and revise"
+  default_prompt: "Use $creative-taste-orchestrator: inspect references, choose the production route, make the decisive real asset and one frame or beat before expanding. Use the appropriate recipe and existing tools; do not substitute particles or placeholders for requested craft. Compare actual output, apply the selected revision, and keep production commentary out of audience-facing copy."
