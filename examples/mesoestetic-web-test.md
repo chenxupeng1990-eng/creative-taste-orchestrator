@@ -38,3 +38,16 @@ Review is same-context self-review, not an isolated reviewer or user-confirmed t
 
 - r02 / desktop: `933d776299a6a564dd2e63ccf3eacc1b5b5998245614a1874137dc398c222a1a`
 - r02 / mobile: `824055326bfdfc7a46d2bfc059e88cb267f14a2ecfb1f82691450933dc6dbf34`
+
+## Follow-up recorded 2026-10-07: not a premium visual precedent
+
+The original test history above is preserved; it is not a new test run. Subsequent feedback acknowledged fewer generic AI-web tendencies, not industry-leading design quality. Later white/technology variants were criticized for weak or missing purpose-made image assets, particle-led substitutes for meaningful 3D, rigid interactions, text overlap, and a weak opening frame. These are later variants, not the r02 hashes above.
+
+Do not retrieve this trial as a successful high-end beauty recipe. Functional checks and an internally selected baseline did not establish that result. Treat the following as diagnoses and production corrections, not newly validated fixes:
+
+- An existing product cutout did not settle the requested focal-image quality: produce and inspect the actual composite/material study before expanding.
+- A canvas, imported library or fallback did not establish the requested renderer and visible effect: exercise the real scene and dependency path.
+- A changing progress variable and no horizontal overflow did not establish useful scroll behavior or absence of overlap: inspect actual intermediate states, reverse scroll and shorter viewports.
+- Internal design explanations were not consumer brand copy: keep the two deliverables separate.
+
+The next production attempt should build one actual product/light/surface unit using the [production route](../references/production-routing.md) and relevant [recipe](../recipes/INDEX.md). The current product and surface cards remain production specifications until actual implementations and visual comparisons support promotion. This note creates no new confirmed taste-memory case and grants no publication approval.
