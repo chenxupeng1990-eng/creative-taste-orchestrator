@@ -1,25 +1,23 @@
-# Visual director board
+# Visual director board: a production handoff
 
-A board coordinates a small proof; it is not a mandatory full design dossier. Fill only what affects the next visual decision.
+Use a compact board only when it helps make the next frame or beat. It is not a full design dossier. Select the [production route](production-routing.md) and keep the approved content and identity stable.
 
 ```yaml
 visual_director_board:
   first_view: "actual content and viewing condition"
-  focal_relationship: ""
-  hierarchy_and_quiet_space: ""
-  composition_and_scale: ""
-  type_and_line_breaks: ""
-  asset_crop_light_material: ""
-  motion_or_interaction: "or not applicable"
-  responsive_or_temporal_adaptation: ""
-  approved_invariants: []
-  proof_question: ""
+  focal_relationship: "subject, type, supporting read and quiet space"
+  composition: "scale, crop, perspective, type and line breaks"
+  decisive_asset: "actual file, or exact asset still to produce"
+  production_method: "recipe/implementation and the producer that will use it"
+  material_and_light: "how the subject obtains its intended appearance"
+  action_and_camera: "visible state change, or not applicable"
+  protected_invariants: []
+  first_output: "one real frame, composite, or full action"
+  proof_question: "one visible decision"
 ```
 
-An expressive page may benefit from a scene, editorial, or spatial metaphor. A utilitarian screen may not. Use a metaphor only when it improves the content and interaction relationship. Ordinary structure is allowed when carefully composed.
+A scene metaphor is optional. Ordinary structure may be appropriate. Derive tokens from the selected relationship or preserve approved tokens; keep their revision with the source proof.
 
-Derive tokens from the visual decisions or preserve the project's approved tokens. Record the token/config revision with the proof; do not silently change it midway through a comparison. Typography, measure, grid, spacing, radii, color, shadows, and motion values need a coherent relationship, not novelty in each property.
+Before expansion, see the actual decisive asset inside the intended composition. Layout placeholders answer placement questions only. A photo-real subject needs actual look development; a moving subject needs an actual beat. Do not choose between two beautifully written descriptions without making either.
 
-Use real content lengths and representative assets. Keep product/character identity and claim evidence stable. When placeholders are unavoidable, mark what they prevent the reviewer from judging. Low cost does not mean so little craft that the idea cannot be read: resolve the focal crop, principal typography, and decisive material or timing cue in both candidates.
-
-Choose the minimum useful proof: a matching viewport, a key visual at intended scale, two page types for a deck, a purchase reason plus evidence for commerce, or a full action/beat for motion. A static board cannot prove temporal rhythm. Preserve the resulting A/B snapshots before expanding production.
+The asset producer uses crop, light and registration. The scene implementer uses actual files, coordinates and action. The reviewer sees the resulting artifact. Drop fields that no participant uses. A declared production method with no output remains a plan, not a finished board.
