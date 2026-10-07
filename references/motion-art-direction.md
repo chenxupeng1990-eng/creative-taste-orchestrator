@@ -1,43 +1,45 @@
-# Motion, video, and audiovisual craft
+# Motion: assets, scene, camera, time
 
-Judge moving work in time. Key frames show composition; playback reveals pacing and continuity; sound requires listening. A contact sheet is evidence for only part of the review.
+Choose a [production route](production-routing.md) before a renderer. Procedural drawing, generated layers, offline clips and real-time 3D have different strengths. Use [asset-production.md](asset-production.md) for required layers and [recipe index](../recipes/INDEX.md) for actual source references or build procedures. Do not replace a requested photographic/organic asset with arbitrary geometry simply because code is available.
 
-## Direction before effects
+## One frame, then the action
 
-Name the action or information change, the viewer's attention path, the intended energy, and what must remain consistent. Choose a renderer for the needed behavior rather than its prestige. Preserve the existing production pipeline when it can express the idea.
+Resolve composition, subject identity, texture, light and type in an actual frame. Then render a short action with enough lead-in and exit to judge it. A static style frame cannot establish timing. Do not give an unfinished direction twenty more shots before its central visual unit works.
 
-For an important beat, record only the relevant values:
+A useful scene plan contains only the production-driving choices:
 
 ```yaml
-motion_beat:
-  action_or_state_change: ""
-  attention_from_to: ""
-  timing_and_hold: ""
-  acceleration_or_ease: ""
-  camera_and_space: ""
-  material_response: ""
-  sound_cue: "or deliberate silence"
-  continuity_invariants: []
+scene:
+  subject_and_assets: "actual asset files or specific missing inputs"
+  world_and_screen_space: "what moves with the camera; what stays readable"
+  action: "visible subject change, not an effect name"
+  camera_path: "target, framing and entry/exit continuity"
+  material_response: "which light/geometry/texture relationship changes"
+  timing_and_hold: "time after the information is actually readable"
+  sound_cue: "actual cue, or deliberate silence"
+  protected_invariants: ["identity, geometry, light, or position"]
 ```
 
-Rest → anticipation → action → settle → hold is a useful option, not a template for every cut or micro-interaction. Hard cuts, uniform rhythmic motion, stillness, subtle fades, and silent sequences can all be intentional. Do not demand five phases, a physical bounce, or a different easing curve for every object.
+The plan is a handoff to existing production tools, not a declaration that a scene exists.
 
-## Small audiovisual proof
+## Reproducible state
 
-Render the shortest excerpt that contains the disputed beat plus enough surrounding context. A 6–10 second excerpt may work; use a shorter or longer one when needed. Compare alternatives at similar fidelity. If audio timing is central, include it before locking the motion rather than adding music at the end.
+Prefer the host's explicit-time render/seek facility. The same input time/progress, viewport and assets should reproduce the same intended state in that environment. Seed procedural variation; do not accumulate rotation or motion by frame count. Share time across continuous actions so changing a scene does not restart the same gesture.
 
-Watch normal-speed playback with sound, then muted. Pause at key states and around cut boundaries. Retain the original clip and extracted frame timestamps. Compare semantic beats if revisions shift the timeline. Do not equate identical timecodes with identical narrative states.
+Preserve layer canvas size, crop offsets, pivots and scale. Use a shared world/camera to cross views rather than enlarging an unrelated low-resolution screenshot. Distinguish continuous camera motion, object motion, state change and screen-space type. A material-specific movement comes from the object/light relationship, not a random particle overlay.
 
-## Review relationships
+Rest, anticipation, action, settle and hold are options, not compulsory phases. Stillness, hard cuts and subtle fades may be correct. No minimum number of moving objects or target moving-pixel percentage. Reading time starts after information finishes arriving, not at the beginning of its draw-on effect.
 
-Inspect focus transfer, acceleration/deceleration, reading time, holds, camera consistency, subject scale/position, light direction, material response, and transitions. For generative clips, protect character/product identity and continuity of key details across shots. For programmatic motion, check clipping, transform origins, overlaps, and whether the render actually expresses the intended material.
+## Playback and performance
 
-Include audio: entry/exit, rhythm against action, dialogue intelligibility, abrupt edits, intentional silence, and sound perspective. Do not claim auditory review without listening. Compare pacing as a sequence of reveals, holds, and cuts; no fixed rhythm curve is universally correct.
+Compare corresponding beats when a revision shifts timing. Watch normal-speed playback with sound, then muted. Check entry/exit, focus transfer, acceleration, readable holds, camera scale, subject continuity, light and material consistency. Inspect frames near the disputed cuts or overlaps; retain timestamps. Do not claim auditory review without listening.
 
-Default effects fail when they distract, flatten hierarchy, or contradict the action—not because they are common. The strongest repair may be shorter movement, better easing, improved lighting, a cleaner cut, a longer hold, better audio, or no movement.
+An offline renderer can spend longer than a frame duration producing one frame. A 60fps encoded film therefore does not prove a 60fps interactive scene. For a website, measure actual live frame behavior and test reverse scroll, resize, offscreen/resume and reduced motion. For a film, inspect final encoding, audio and the complete relevant sequence.
 
-## Repair and regression
+QA helpers may locate frozen frames, jumps, text bounds, clipping or blank output. Camera shake or noise can inflate frame differences; geometry can obscure text beyond a text-bounds check. Treat metrics as places to look, not an aesthetic score. A contact sheet cannot prove pacing, sound sync, or absence of a single-frame defect.
 
-Use [visual-feedback-loop.md](visual-feedback-loop.md). State the proposed cause, change one beat or a related parameter set, then replay its lead-in and exit. Recheck a protected continuity invariant. A poor render of a promising idea calls for craft repair, not automatic replacement of the motion thesis.
+## Repair and reuse
 
-Selected frames cannot prove smooth motion, full continuity, audio sync, or absence of single-frame defects. Mark coverage honestly; use denser frame inspection around observed problems. Full-film acceptance requires the appropriate playback coverage, not a contact sheet alone.
+Separate an incorrect premise from weak assets, poor lighting/material, timing mistakes and runtime defects. Repair one cause, replay its lead-in and exit, compare with the last-good version and use [review application](review-application.md). Repeated visual failure may require returning to asset production or changing the route, not another explanatory paragraph.
+
+After actual production, retain implementation, parameters, evidence and known weakness using [recipe promotion](../recipes/INDEX.md). Do not claim that an external sample or a self-review establishes project-level human approval.
