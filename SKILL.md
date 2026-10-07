@@ -1,43 +1,45 @@
 ---
 name: creative-taste-orchestrator
-description: "Improve web, motion, video, brand, PPT, and commerce creative through observed references, comparable rendered proofs, applied review decisions, and scoped human feedback. Use when selecting a direction or when work feels generic, cheap, or visually weak."
+description: "Direct web, motion, video, brand, PPT, and commerce creative from inspected references to actual assets, medium-specific craft, comparable proofs, and applied revisions. Use when work feels generic, cheap, visually weak, or needs a deliberate production route."
 ---
 
 # Creative Taste Orchestrator
 
-Make the artifact better, not its explanation longer. A thesis is a hypothesis; inspect actual work before defending it. Preserve approved business facts, copy, identity, and project instructions. Use the host's existing production tools, not a replacement framework.
+Make the artifact better, not its explanation longer. Own the connection between direction and production: decide what must be made, use the right asset and rendering tools, inspect the result, and apply the next edit. Keep the host's existing production pipeline. Do not turn this skill into another renderer, committee, or aesthetic scoring service.
 
-## Floor and modes
+Preserve project instructions, approved facts, copy, identity, and required functionality. Public-facing content addresses the audience; internal directions such as "make a premium website", renderer names, QA claims, and implementation plans belong in project notes, not hero copy. A prototype disclosure belongs in an appropriate footer or colophon.
 
-Truth, required content, accessibility, task completion, and agreed limits are non-negotiable. Inside that floor, choose the relationships that suit the brief. Unusual is not automatically better. Familiar grids, stillness, modest interactions, and restrained typography can win. Do not require a dramatic metaphor, artificial risk, fixed deletion percentage, or a thesis reset after two implementation mistakes.
+## Route before implementation
 
-- `spark` / `review`: existing work A versus a targeted change B; no panel.
-- `taste-first`: two plausible visible directions at comparable fidelity, then a decision and targeted refinement.
-- `system`: an extended or multi-medium task; use the director panel without averaging incompatible directions.
+- `spark` / `review`: existing work A versus a targeted change B; no panel or unnecessary new assets.
+- `taste-first`: two plausible visible directions at comparable fidelity, then targeted refinement.
+- `system`: extended or multi-medium work; use the optional [panel](references/director-panel.md) without averaging incompatible directions.
 
-Read [visual-feedback-loop.md](references/visual-feedback-loop.md) and the relevant [web](references/web-art-direction.md), [motion](references/motion-art-direction.md), or [medium](references/domain-adapters.md) adapter. Load the thesis, board, diagnosis, or examples references only when needed. [review-application.md](references/review-application.md) defines the executable decision boundary.
+For new visual production, read [production-routing.md](references/production-routing.md), then only the relevant [recipe](recipes/INDEX.md) and [web](references/web-art-direction.md), [motion](references/motion-art-direction.md), or [other-medium](references/domain-adapters.md) adapter. Read [asset-production.md](references/asset-production.md) when imagery, textures, models, or generated layers determine quality. Use [visual-feedback-loop.md](references/visual-feedback-loop.md) for comparison and [review-application.md](references/review-application.md) for the executable decision boundary. Thesis, board, and diagnostic references are optional aids, not required paperwork.
 
-## Production loop
+## Make before expanding
 
-1. Frame one visual question using the real brief and assets. Retrieve a small set of relevant references and scoped feedback. A URL or style name is not an inspected visual source. If a reference cannot be viewed, disclose that gap and make an original provisional proof.
-2. State the intended first impression, dominant relationship, quiet region, and expected visible result. Translate adjectives into scale, crop, typography, space, material, timing, and sound. Keep the brief compact.
-3. Render comparable A/B proofs before expanding. Same content, assets, viewports, loaded fonts, and relevant states. For a revision, A is the last-good working baseline. Preserve source files as well as screenshots. Do not reward one candidate with better photography than the other.
-4. Package actual captures with `scripts/build_comparison.py`. Inspect originals at intended size. Look first without rationale, then with the brief. Record `A`, `B`, `tie`, `neither`, or `insufficient_evidence`, located observations on both sides, hard failures, and regressions. Self-review is useful but is not independent review.
-5. Apply the record with `scripts/apply_review.py --bundle <comparison> --state <project>/working-state.json`. Pending records, changed snapshots, stale baselines, unresolved hard failures, and mismatched review/manifest bindings cannot select a version. `B` promotes its exact proof snapshots; `A` or `tie` preserves A; `neither` requests revision without discarding the last-good version; insufficient evidence stays pending.
-6. Read the resulting working state before production. Implement only the selected direction. Separate direction, craft, content/assets, and technical causes. Make one main revision hypothesis, protect existing strengths, and re-render. New evidence must win another comparison before replacing the baseline. Never rename screenshots to make a different revision look like A.
-7. Expand the selected direction with real content and interactions. Check desktop, intermediate width, mobile, loading failures, keyboard focus, and reduced motion as relevant. Proof selection is not acceptance of an entire website or film.
-8. Record human feedback separately from model diagnoses. Bind the case to the exact artifact ID/version before confirmation. A user's explicit preference does not require blind-review permission. Keep the proposed explanation unconfirmed until supported. Retrieve negatives within their scope next time.
+1. **Inspect and frame.** View actual reference images, states, or clips. Identify the focal relationship and the production bottleneck: asset, material, composition, motion, or implementation. A URL or style name is not a viewed reference. Declare an inaccessible reference and continue with a provisional original direction when appropriate.
+2. **Choose the route.** Select procedural drawing/3D, generated or photographed layers, pre-rendered motion, or a hybrid. Name the actual producer/tool, required inputs, and resulting files. A requested renderer or interaction is an obligation, not a prestige label. Missing tools may limit production; they do not justify silently replacing the requested effect with particles or a different renderer.
+3. **Build the decisive asset.** Inspect existing assets at the intended display size. If they cannot carry the requested image quality, produce or obtain the missing focal asset before full implementation. Preserve factual product identity. Keep blocking geometry and placeholder media explicitly provisional. Do not invent a generation receipt or use file metadata as proof of generation.
+4. **Resolve one frame, then one beat.** Establish real composition, type, crop, lighting, and material together. For moving work, make the shortest meaningful action including entry and exit; a still cannot lock motion. Use the selected recipe's actual implementation or author the missing one. Stop expanding when the main subject still looks pasted, plastic, noisy, or unrelated to the brief.
+5. **Compare fairly.** For new directions, make comparable A/B proofs. For repairs, A is the last-good baseline. Freeze factual content and viewing conditions; declare an intentional asset change rather than secretly giving one candidate better imagery. Package real captures using `scripts/build_comparison.py`, inspect originals, and record A/B/tie/neither/insufficient_evidence with visible reasons and regressions. Both ordinary may mean neither.
+6. **Apply and read.** Run `scripts/apply_review.py --bundle <comparison> --state <project>/working-state.json`; read the resulting state before editing production sources. It binds a declared decision to snapshots, not to aesthetic truth. Pending, stale, tampered, or hard-failing selections cannot promote B. Preserve the source/assets/config matching the selected proof.
+7. **Expand and exercise.** Carry the selected assets and scene behavior into real content, mobile layouts, and interactions. Inspect intermediate scroll/time states, reverse travel, resizing, loading failures, keyboard use, and reduced motion where relevant. Test actual output changes, not only counters, CSS variables, canvas existence, or a successful build. A fallback keeps content usable but does not fulfill a specifically requested 3D experience.
+8. **Repair and learn.** Separate direction, craft, asset/content, and technical causes. Change the highest-impact cause, preserve strengths, re-render, compare, and apply. Store explicit human feedback separately from proposed diagnoses using [taste memory](references/taste-memory.md). Promote a reusable production recipe only with its implementation, actual evidence, limitations, and scope; do not relabel a failed brand trial as a positive precedent.
 
-## Small executable tools
+## Craft and operating limits
 
-The comparison builder snapshots supplied media and presents them; it neither captures nor judges. `apply_review.py` verifies snapshot bytes and applies the declared decision to a working baseline. It does not inspect pixels, authenticate a reviewer, modify production sources, grant publication, or establish audience response. A host must actually read its selected state. Source-code/asset archives still belong to the production project.
+Truth, content, accessibility, task completion, and agreed cost remain the floor. Distinctive is not automatically better. Familiar grids, stillness, modest motion, and ordinary components can win. No forced metaphor, fixed deletion quota, mandatory risk, or global motion-area target.
 
-`validate_gate.py` is retained only as legacy record-shape diagnostics. `record_valid` never means accepted. It is no longer the required path for iteration or human preference confirmation. Do not claim formal creative acceptance from its exit code.
+Code should change the visible relationship or reliably produce, inspect, or preserve it. Every claimed effect needs a real consumer: a texture mapped to a surface, a camera driven by progress, a layer composited with registration, or an asset present in the final artifact. A file name, unused import, or material setting alone proves nothing. Reuse established host libraries; do not add another abstract runtime until a repeated production need exists.
 
-`taste_memory.py` keeps JSONL cases and artifacts as primary records. It no longer creates unused rules or a fragile derived index. Confirmation is idempotent by event, rejects artifact switches, and requires an explicit human event. Search filters confirmed supersessions and accepts exact `--scope` and `--verdict`; retrieval-log failure warns but does not prevent reading. These scripts are single-writer project tools, not an adversarial authorization service.
+Use one coordinating agent and narrow production tasks when delegation is available. Pass a shared composition/asset context and a concrete output contract. Do not claim independent review without an actually separate context. A same-context visual pass is self-review, even with neutral labels.
 
-## Work budget and delivery
+## Tools and delivery
 
-Default to two low-cost proofs and up to two targeted revision passes. Continue reversible production without asking for approval at every internal step. Ask only when a missing decision changes meaning, cost, permission, or scope. Do not stop at a proof plan when available tools can render it.
+The existing comparison, review-application, and memory tools stay narrow. They do not generate assets, judge pixels, authenticate people, publish, or make the host obey their state. `validate_gate.py` remains legacy record-shape diagnostics, never aesthetic acceptance. Recipe readiness labels are documentation, not new executable gate states.
 
-Lead with the working artifact, recommendation, visible reason, and remaining limitation. Save comparisons, tests, and source references in the project. Label synthetic examples, self-review, partial coverage, and pending human feedback honestly. A build, screenshot, test suite, or filled checklist alone cannot prove tasteful work.
+Default to two small proofs and up to two targeted revisions, spending that effort on the highest-risk visual unit rather than a full mediocre site. Continue reversible work without asking at every step; ask when meaning, scope, permission, or paid-service cost changes. Report tool failure instead of disappearing into repeated calls.
+
+Lead with the artifact, decision, visible change, and unresolved limitation. Keep planning, provenance, tests, and recipe notes in the project. Do not promise industry-leading quality from a checklist or call a code scaffold a finished visual asset.
